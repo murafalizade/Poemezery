@@ -1,0 +1,51 @@
+.card{
+    max-width: 250px;
+    min-height: 100px;
+    margin-bottom: 25px;
+}
+.cardBody{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid;
+    padding: 5px;
+    margin: 5px;
+ 
+    padding-bottom: 20px;
+}
+.cardBody h3{
+    text-align: left;
+    font-size: 30px;
+}
+.cardBody p{
+    font-family: 'Times New Roman', Times, serif;
+}
+.like{
+    width: 50px;
+    border: none;
+    padding:0;
+    margin: 0;
+    background-color: transparent;
+}
+.tags{
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+}
+.tags span{
+    text-align: center;
+    border:1px solid;
+    border-radius:20px;
+    width:75px;
+    padding: 5px;
+    padding-top: 10px;
+    height:40px;
+    font-size: 13px;
+}
+.tags span:not(:first-child){
+    margin-left: 10px;
+
+}
+.cardFooter{
+    display: flex;
+    justify-content: space-between;
+}

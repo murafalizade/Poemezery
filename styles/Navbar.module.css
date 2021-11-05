@@ -1,0 +1,46 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.navbar h3{
+    font-size: 27px;
+    margin-top: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.navbar input{
+    width: 30%;
+    height: 35px;
+    border: none;
+    margin-top: 20px;
+    border-bottom: 1px solid;
+    padding-left: 5px;
+    outline: none;
+}
+.form{
+    display: flex;
+    margin-top: 15px;
+}
+.btn{
+    height: 44px;
+    border:none;
+    text-align: center;
+    text-decoration: none;
+    margin: 0 auto;
+    clear: both;
+    background-color: white;
+    font-size: 16px;
+    font-weight: 300;
+    outline: none;
+    padding: 9px;
+    cursor: pointer;
+}
+.btn:not(:first-child):hover{
+    background-color: orange;
+    color: white;
+}
+.btn:not(:first-child){
+    border: 1px solid;
+    border-radius: 23px;
+    margin-left: 10px;
+}
