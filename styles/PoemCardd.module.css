@@ -2,6 +2,7 @@
     max-width: 250px;
     min-height: 100px;
     margin-bottom: 25px;
+    text-emphasis: none;
 }
 .cardBody{
     display: flex;
@@ -24,7 +25,7 @@
     border: none;
     padding:0;
     margin: 0;
-    background-color: transparent;
+    background-color: transparent; 
 }
 .tags{
     display: flex;

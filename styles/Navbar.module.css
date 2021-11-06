@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    margin-bottom: 25px;
 }
 .navbar h3{
     font-size: 27px;
@@ -43,4 +44,45 @@
     border: 1px solid;
     border-radius: 23px;
     margin-left: 10px;
+}
+.icons{
+    margin-right: 50px;
+    margin-top: 10px;
+}
+.secretSection{
+    display:block;
+    width: 200px;
+    padding: 15px;
+    position: fixed;
+    left: 83%; 
+    top: 83px;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    z-index: 10000;
+}
+.secretSection:first-child{
+    left: -6%;
+}
+.secretSection ul:first-child{
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 20px;
+}
+.secretSection ul li{
+    line-height: 25px;
+    text-align: left;
+    padding: 5px;
+}
+.footer{
+    border-top: 1px solid #eaeaea;
+    height: 60px;
+    text-align: center;
+}
+.footer ul{
+    padding: 40px;
+    margin-top: -20px;
+    margin-left: 30%;
+}
+.footer li{
+    margin: 0 10px;
+    float: left;
 }
