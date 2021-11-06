@@ -1,17 +1,18 @@
 import React from 'react'
+import styles from '../styles/register.module.css'
 
 export default function Register() {
     return (
         <div>
             <form>
-                <fieldset>
-                    <a href='£'>Sign up Facebook</a>
-                    <a href='£'>Sign up Twitter</a>
-                    <a href='£'>Sign up Google</a>
-                    <a href='/sign-up-email'>Sign up Email</a>
+                <fieldset className={styles.forms}>
+                    <h4>Welcome !</h4>
+                    <a  className={styles.linkButton} href='#'>Sign up Facebook</a>
+                    <a className={styles.linkButton} href='#'>Sign up Twitter</a>
+                    <a className={styles.linkButton} href='#'>Sign up Google</a>
+                    <a className={styles.linkButton} href='/sign-up-email'>Sign up Email</a>
                 </fieldset>
-                <hr />
-                <small>Already have an account?<a href='/sign-in'>Log in</a></small>
+                <small className={styles.quote}>Already have an account?<a className='link' href='/sign-in'>Log in</a></small>
             </form>
         </div>
     )

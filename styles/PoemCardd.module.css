@@ -20,13 +20,6 @@
 .cardBody p{
     font-family: 'Times New Roman', Times, serif;
 }
-.like{
-    width: 50px;
-    border: none;
-    padding:0;
-    margin: 0;
-    background-color: transparent; 
-}
 .tags{
     display: flex;
     flex-direction: row;

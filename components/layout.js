@@ -28,7 +28,7 @@ export default function Layout({ children }) {
                                 <p> Not new notifications yet</p>    
                             </div>                 
                         </div>
-                        <div  className={styles.icons}><a href='bookmarks' ><IoBookmarkOutline size={'30px'} /></a></div>
+                        <div  className={styles.icons}><a href='/bookmarks' ><IoBookmarkOutline size={'30px'} /></a></div>
                         <div>
                             <Image onMouseDown={() => setShowDetails(!showDetails)} src='/default_avatar.png' width='40px' height='40px' alt='avatar_image' />
                             <div style={showDetails ? { display: 'block' } : { display: 'none' }} className={styles.secretSection}>

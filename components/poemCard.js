@@ -20,7 +20,7 @@ export default function PoemCard({ poem }) {
             <div className={styles.cardFooter}>
                 <span><a href='/authors'>Authors NAme</a></span>
                 <div>
-                    <button className={styles.like}><BsHeart fill={"currentColor"}/> <span>0</span></button>
+                    <button className='like'><BsHeart fill={"currentColor"}/> <span>0</span></button>
                     <span>0 views</span>
                 </div>
 

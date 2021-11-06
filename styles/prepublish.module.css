@@ -1,0 +1,19 @@
+.modal{
+    width: 750px;
+    height: 80vh;
+    border: 1px solid #eaeaea;
+    z-index: 999;
+    background-color: white;
+    color: black;
+    position: fixed;
+    left: 22%;
+    top: 80px;
+    text-align: center;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.preview{
+    height: 300px;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 20px;
+}

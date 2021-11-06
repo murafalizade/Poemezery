@@ -1,0 +1,42 @@
+.linkButton{
+    width: 250px;
+    display: block;
+    height: 50px;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.linkButton:hover{
+    background-color: orange;
+    color: white;
+}
+.forms{
+    margin-left: 40%;
+}
+.forms h4{
+    margin-bottom: 20px;
+}
+.quote{
+    text-align:center;
+    margin-left: 40%;
+}
+.formInput{
+    display: block;
+    margin: 20px;
+    padding: 20px 10px;
+    width: 250px;
+    height: 30px;
+}
+
+.submitButton{
+    display: block;
+    width: 250px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    background-color: orange;
+    color: white;
+    margin: 20px;
+}

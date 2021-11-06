@@ -1,4 +1,14 @@
 .authorBox{
     text-align: center;
     padding: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.info{
+    position: relative;
+    top: -30px;
+    left: 30px;
+}
+.shares span:not(:first-child){
+    margin-left: 20px;
 }
