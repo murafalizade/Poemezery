@@ -25,7 +25,11 @@
   color: white;
 }
 
+.ReactTags__remove{
+  background-color: white;
+  border: none !important;
 
+}
 .boxs{
   display: flex;
   gap:10px;

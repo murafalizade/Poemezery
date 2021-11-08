@@ -50,7 +50,6 @@ export default function Editor() {
                 }}
                 plugins={plugins}
             />
-            <ButtonGroup onClick={()=>{console.log(editorState.getCurrentContent().getPlainText())}}>Click me</ButtonGroup>
             <InlineToolbar />
             <SideToolbar />
         </div >
