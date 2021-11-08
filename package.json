@@ -31,5 +31,9 @@
   "devDependencies": {
     "eslint": "7",
     "eslint-config-next": "12.0.2"
-  }
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "murafalizade <hmmuralizade29@gmail.com>",
+  "license": "MIT"
 }

@@ -49,6 +49,8 @@ export default function PrePublish() {
                     <Col md={6}>
                         <Form className={styles.infoForm}>
                             <h4>Information Poem</h4>
+                            <fieldset style={{marginLeft:'35px'}}>
+
                             <input placeholder='Title of Peom' />
                             <select>
                                 <option value='azerbaijan'>Azerbaijan</option>
@@ -71,6 +73,7 @@ export default function PrePublish() {
                                 <input type='checkbox' onChange={(e)=>setChekceds(e.target.checked)} checked={checkeds}/>
                                 I am not author of the poem
                             </label>
+                            </fieldset>
                         </Form>
                     </Col>
                 </Row>

@@ -70,3 +70,19 @@
 .draftJsToolbar__blockType__27Jwn {
   line-height: 20px !important;
 }
+
+.tags span{
+  text-align: center;
+  border:1px solid;
+  border-radius:20px;
+  width:75px;
+  padding: 10px;
+  height:40px;
+  font-size: 13px;
+  margin-left: 10px;
+
+}
+.tags span:hover{
+  background-color: orange;
+  color: white;
+}
