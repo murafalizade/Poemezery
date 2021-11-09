@@ -6,11 +6,15 @@ const poemModel = mongoose.model('poem', new mongoose.Schema({
     ownId: String,
     tags: [],
     poet: String,
-    likes: Number,
-    views: Number,
+    likes: {type:Number,default:0},
+    align: {type:String,default:'center'},
+    backgroundImg:String,
+    views: {type:Number,default:0},
     title: String,
     author: String,
-    categories: String
+    category: String,
+    language: String
+
 }));
 
 module.exports = poemModel;

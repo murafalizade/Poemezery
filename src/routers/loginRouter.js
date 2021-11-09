@@ -13,11 +13,12 @@ router.get('/auth/google', passport.authenticate('google', {
 }));
 
 router.get('/auth/google/callback/', passport.authenticate('google', { session: false }), (req, res) => {
-    jwt.sign({ userId: req.user.id }, 'secretkey', { expiresIn: '5 min' }, (err, token) => {
+    jwt.sign({ userId: req.user.id }, 'secretkey', { expiresIn: `${7*24*60} min` }, (err, token) => {
         if (err) {
             res.sendStatus(500);
         } else {
-            res.json({ token });
+            res.header('Header-Token',token)
+            res.send( token );
         }
     });
 }

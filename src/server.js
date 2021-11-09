@@ -1,8 +1,8 @@
 // Development
 const express = require("express");
 const cors = require('cors');
-const morgan = require('morgan')
-
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const app = express();
 
 // Routers
@@ -28,6 +28,7 @@ try {
 // Middlewares
 app.use(morgan('dev'));
 app.use(cors());
+app.use(bodyParser.json());
 app.use(passport.initialize())
 
 // Routers
