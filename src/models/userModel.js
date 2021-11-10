@@ -10,6 +10,7 @@ const userModel = mongoose.model('user', new mongoose.Schema({
     notifications: [],
     email: String,
     penName: String,
+    liked:[],
     password: {type:String,default:''},
     bookMarks: [],
     imgUrl: String,

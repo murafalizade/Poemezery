@@ -31,6 +31,7 @@ module.exports.authorFollow = async (req,res)=>{
     author.followers.push({id:my.id,name:my.penName});
     await my.save();
     await author.save();
+    res.status(200).send('Success');
 }
 module.exports.authorUnfollow = async (req,res)=>{
     if(!req.user.id) return res.status(401).send('Access denied');
@@ -44,14 +45,27 @@ module.exports.authorUnfollow = async (req,res)=>{
     author.followers - newFollower;
     await my.save();
     await author.save();
-
+    res.status(200).send('Success');
 }
 module.exports.poemLike = async (req,res)=>{
     if(!req.user.id) return res.status(401).send('Access denied');
     const poem = await poemModel.findOne({id:req.user.id});
     if(!poem) return res.status(404).send('doens find');
-    
+    const profile = await userModel.findOne({id:req.user.id});
+    if(!profile) return res.status(404).send('Author doesnt find');
+    profile.liked.push(poem.id);
+    poem.like+=1;
+    await profile.save();
+    await poem.save();
+    res.status(200).send('Success');
 }
-module.exports.PoemAddBookmark = async(req,res)=>{
-    console.log('hello')
+module.exports.PoemAddBookmark = async (req,res)=>{
+    if(!req.user.id) return res.status(401).send('Access denied');
+    const poem = await poemModel.findOne({id:req.user.id});
+    if(!poem) return res.status(404).send('doens find');
+    const profile = await userModel.findOne({id:req.user.id});
+    if(!profile) return res.status(404).send('Author doesnt find');
+    profile.bookMarks.push(poem);
+    await profile.save();
+    res.status(200).send('Success');
 }
