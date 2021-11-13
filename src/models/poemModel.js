@@ -6,7 +6,7 @@ const poemModel = mongoose.model('poem', new mongoose.Schema({
     ownId: String,
     tags: [],
     poet: String,
-    likes: {type:Number,default:0},
+    likes: {type:Number,default:0,min:0},
     align: {type:String,default:'center'},
     backgroundImg:String,
     views: {type:Number,default:0},
@@ -14,7 +14,6 @@ const poemModel = mongoose.model('poem', new mongoose.Schema({
     author: String,
     category: String,
     language: String
-
 }));
 
 module.exports = poemModel;

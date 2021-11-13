@@ -16,5 +16,4 @@ Router.post('/author/:id/follow',isAuth, authorFollow);
 Router.post('/author/:id/unfollow',isAuth, authorUnfollow);
 Router.post('/poem/:id/like',isAuth, poemLike);
 Router.post('/poem/:id/addbookmark',isAuth, PoemAddBookmark);
- 
 module.exports = Router

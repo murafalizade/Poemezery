@@ -11,9 +11,9 @@ const userModel = mongoose.model('user', new mongoose.Schema({
     email: String,
     penName: String,
     liked:[],
-    password: {type:String,default:''},
+    password: {type:String,default:'default_avatar.png'},
     bookMarks: [],
-    imgUrl: String,
+    imgUrl: {type:String,default:'/'},
     description: { type: String, default: '' }
 }));
 

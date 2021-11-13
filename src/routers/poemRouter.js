@@ -3,7 +3,7 @@ const { allPoems, createPoem, editPoem, onePoem, getBookmarks, myPoems } = requi
 
 const isAuth = require('../midlewares/isAuth');
 Router.get('/poems', allPoems);
-Router.post('/create-poem', isAuth, createPoem);
+Router.post('/create-poem', createPoem);
 Router.put('/my-poem/edit/:id', isAuth, editPoem);
 Router.get('/poems/:id', onePoem);
 Router.get('/bookmarks/poems', getBookmarks);
