@@ -7,22 +7,20 @@ export default function PoemCard({ poem }) {
     return (
         <div className={styles.card}>
             <div className={styles.cardBody}>
-                <h3><a href='/poems/id'>Poem Title</a></h3>
+                <h3><a href={`/poems/${poem.id}`}>{poem.title}</a></h3>
                 <TextTruncate
                     line={5}
                     element='p'
-                    textTruncateChild={<a href="/poems/:id">Read More</a>}
-                    text={`Phone phon Leave It alone Go \n for a walk Leave It at home Go  overseas And dont even roam Sometimes \n we all need A cell \n free zone`} />
+                    textTruncateChild={<a href={`/poems/${poem.id}`}>Read More</a>}
+                    text={poem.poet} />
             </div>
             <div className={styles.cardFooter}>
-                <span><a href='/authors/1'>Authors NAme</a></span>
+                <span><a href={`/authors/${poem.ownId}`}>{poem.author}</a></span>
                 <div>
-                    <button className='like'><IoBookmarkOutline/></button>
-                    <span>0 views</span>
+                    <button className='like'><IoBookmarkOutline /></button>
+                    <span>{poem.views} views</span>
                 </div>
-
             </div>
-
         </div>
 
     )

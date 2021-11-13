@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import axios from 'axios';
+import { useState,useEffect } from 'react'
 import PoemCard from '../components/poemCard';
 
-export default function Home() {
-  const [poems, setPoems] = useState([1, 2, 3, 34, 54]);
+export default function Home({poems}) {
   // const [feels] = useState([{ id: 1, color: 'red' }, { id: 2, color: 'green' }, { id: 3, color: 'blue' }, { id: 5, color: 'black' }, { id: 6, color: 'yellow' },
   // { id: 8, color: 'light' }])
   return (
@@ -44,3 +44,11 @@ export default function Home() {
   )
 }
 
+export const getServerSideProps = async () =>{
+  const poemsData = await axios.get('http://localhost:8080/api/v1/poems');
+  return {
+    props:{
+      poems:poemsData.data
+    }
+  }
+}

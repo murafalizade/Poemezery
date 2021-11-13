@@ -2,7 +2,9 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import PoemCard from '../../components/poemCard'
 import Image from 'next/image'
-export default function Authors() {
+import axios from 'axios';
+export default function Authors({ user }) {
+    console.log(user.poems)
     return (
         <div>
             <Container>
@@ -10,26 +12,53 @@ export default function Authors() {
                     <div style={{ textAlign: 'center' }}>
                         <div>
                             <div>
-                            <Image src='/default_avatar.png' width='100px' height='100px' />
+                                <Image src='/default_avatar.png' width='100px' height='100px' />
 
                             </div>
                             <div>
-                                <h4>Murad Aliyev</h4>
-                                <p style={{color: '#9b9b9b'}}>llorElit laborum eu deserunt do. Laborum officia non tempor pariatur magna ut tempor labore eiusmod deserunt ullamco eiusmod. Duis pariatur ut labore officia minim laboris ad officia et consectetur officia. Ad occaecat reprehenderit tempor voluptate veniam. Anim laborum commodo ullamco mollit laboris irure magna culpa mollit voluptate incididunt esse ex. Dolore sit mollit ea aliqua sint id cillum aute nostrud cupidatat.orem</p>
+                                <h4>{user.penName}</h4>
+                                <p style={{ color: '#9b9b9b' }}>{user.description}</p>
                             </div>
                         </div>
                         <div>
-                            <small style={{color: '#9b9b9b'}}>0 followers     0 following</small>
+                            <small style={{ color: '#9b9b9b' }}>{user.followers.length} followers     {user.following.length} following</small>
                             <button className='btn btn-outline-success rounded mx-3'>Follow</button>
                         </div>
                     </div>
                 </Row>
                 <Row>
                     <Col md={4}>
-                        <PoemCard />
+                        {user.poems.length === 0 ? (<p style={{textAlign:'center',fontSize:'20px',marginLeft:'100%',marginTop:'30%'}}>Not any poet</p>) : user.poems.map((poem) => (<PoemCard key={poem.id} poem={poem} />))}
                     </Col>
                 </Row>
             </Container>
         </div>
     )
+}
+
+
+export async function getStaticPaths() {
+    // Call an external API endpoint to get posts
+    const res = await axios.get('http://localhost:8080/api/v1/authors')
+    const users = res.data;
+
+    // Get the paths we want to pre-render based on posts
+    const paths = users.map((user) => ({
+        params: { author: user.id.toString() },
+    }))
+
+    // We'll pre-render only these paths at build time.
+    // { fallback: false } means other routes should 404.
+    return { paths, fallback: false }
+}
+
+// This also gets called at build time
+export async function getStaticProps({ params }) {
+    // params contains the post `id`.
+    // If the route is like /posts/1, then params.id is 1
+    const res = await axios.get(`http://localhost:8080/api/v1/authors/${params.author}`)
+    const user = res.data;
+
+    // Pass post data to the page via props
+    return { props: { user } }
 }
