@@ -7,9 +7,8 @@ import Head from 'next/head'
 import styles from '../../styles/poems.module.css'
 import axios from 'axios';
 export default function Poems({poem}) {
-    console.log(poem)
     return (
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: poem.align,backgroundImage:`url(${poem.backgroundImg?poem.backgroundImg:'#'})`,padding:'20px' }}>
             <Head>
                 <title>"{poem.title}" - Social Network for poem</title>
             </Head>

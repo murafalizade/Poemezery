@@ -1,10 +1,7 @@
 import axios from 'axios';
-import { useState,useEffect } from 'react'
 import PoemCard from '../components/poemCard';
 
-export default function Home({poems}) {
-  // const [feels] = useState([{ id: 1, color: 'red' }, { id: 2, color: 'green' }, { id: 3, color: 'blue' }, { id: 5, color: 'black' }, { id: 6, color: 'yellow' },
-  // { id: 8, color: 'light' }])
+export default function Home({ poems, tags, authors }) {
   return (
     <div >
       <div className='container'>
@@ -23,17 +20,16 @@ export default function Home({poems}) {
             <div>
               <ul className='list-group'>
                 <p><b>Famous poet</b></p>
-                <li>Albert</li>
-                <li>Albert</li>
-                <li>Albert</li>
+                {authors.map((author)=>(<li key={author.id}><a href={`/authors/${author.id}`}>{author.penName}</a></li>))}
               </ul>
             </div>
             <div>
               <p><b>Top tag of weeks</b></p>
-                  <div className='tags'><a href='/£'><span>Vetenperverlik</span></a>
-                  <a href='/£'><span>Vetenperverlik</span></a>
-                  </div>
-                  
+              <div className='tags'>
+                {tags.map((tag) => (
+                  <a key={tag.id} href={`/query?q=${tag.id}`}><span>{tag.name}</span></a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -44,11 +40,15 @@ export default function Home({poems}) {
   )
 }
 
-export const getServerSideProps = async () =>{
+export const getServerSideProps = async () => {
   const poemsData = await axios.get('http://localhost:8080/api/v1/poems');
+  const tagsData = await axios.get('http://localhost:8080/api/v1/tags');
+  const authorsData = await axios.get('http://localhost:8080/api/v1/authors')
   return {
-    props:{
-      poems:poemsData.data
+    props: {
+      poems: poemsData.data,
+      tags: tagsData.data,
+      authors:authorsData.data
     }
   }
 }

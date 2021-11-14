@@ -4,7 +4,6 @@ import PoemCard from '../../components/poemCard'
 import Image from 'next/image'
 import axios from 'axios';
 export default function Authors({ user }) {
-    console.log(user.poems)
     return (
         <div>
             <Container>
@@ -12,7 +11,7 @@ export default function Authors({ user }) {
                     <div style={{ textAlign: 'center' }}>
                         <div>
                             <div>
-                                <Image src='/default_avatar.png' width='100px' height='100px' />
+                                <Image src={user.imgUrl} alt={`${`${user.penName} avatar`.replace(" ","_")}`} width='100px' height='100px' />
 
                             </div>
                             <div>
@@ -58,7 +57,6 @@ export async function getStaticProps({ params }) {
     // If the route is like /posts/1, then params.id is 1
     const res = await axios.get(`http://localhost:8080/api/v1/authors/${params.author}`)
     const user = res.data;
-
     // Pass post data to the page via props
     return { props: { user } }
 }
