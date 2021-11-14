@@ -9,7 +9,7 @@ const app = express();
 const authRouter = require('./routers/loginRouter')
 const poemRouter = require('./routers/poemRouter')
 const userRouter = require('./routers/userRouter')
-
+const tagRouter = require('./routers/searchRouter')
 // Configs and Constants
 const passport = require('passport');
 require('dotenv').config();
@@ -28,13 +28,14 @@ try {
 // Middlewares
 app.use(morgan('dev'));
 app.use(cors());
+app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(passport.initialize())
+app.use(passport.initialize());
 
 // Routers
 app.use('/api/v1', authRouter);
 app.use('/api/v1', poemRouter);
 app.use('/api/v1', userRouter);
-
+app.use('/api/v1',tagRouter);
 
 app.listen(PORT, () => console.log(`server is running http://localhost:${PORT}`));

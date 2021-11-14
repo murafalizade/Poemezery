@@ -7,7 +7,10 @@ module.exports.allPoems = async (req, res) => {
 }
 
 module.exports.createPoem = async (req, res) => {
-    const { author, title, language, tags, align, backgroundImg, category, poet } = req.body;
+    console.log(req.user);
+    const {  tags} = req.body;
+    const profile =await  userModel.findOne({id:req.user.userId});
+    if(!profile) return res.status(500).send('error');
     tags.forEach(async (tag) => {
         const currentTag = await tagsModel.findOne({ name: tag.name });
         if (!currentTag) {
@@ -19,14 +22,16 @@ module.exports.createPoem = async (req, res) => {
             await currentTag.save();
         }
     })
-    const newPoem = new poemModel({ ownId: '12223', author, title, tags, align, language, poet, category, backgroundImg });
+    const newPoem = new poemModel({ ...{ownId: req.user.userId,author:profile.penName}, ...req.body});
+    profile.poems.push(newPoem);
     savePoem = await newPoem.save();
+    await profile.save();
     return res.status(200).send(savePoem);
 }
 
 module.exports.editPoem = async (req, res) => {
     const editInformation = req.body;
-    const author = await userModel.findOne({ id: req.user.id });
+    const author = await userModel.findOne({ id: req.user.userId });
     if (!author) return res.status(400).send('Abonded');
     const updatePoem = author.poems.map(poem => {
         if (poem.id === req.params.id) {
@@ -51,13 +56,13 @@ module.exports.onePoem = async (req, res) => {
 
 }
 module.exports.getBookmarks = async (req, res) => {
-    const user = await userModel.findOne({ id: req.user.id });
+    const user = await userModel.findOne({ id: req.user.userId });
     if (!user) return res.status(401).send('Please login or register');
     const bookMarkPoems = user.bookMarks;
     return res.status(200).send(bookMarkPoems);
 }
 module.exports.myPoems = async (req, res) => {
-    const userId = req.user.id;
+    const userId = req.user.userId;
     const user = await userModel.findOne({ id: userId });
     if (!user) return res.status(401).send('Please login or register');
     const poems = user.poems;

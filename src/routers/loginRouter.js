@@ -4,9 +4,11 @@ const jwt = require('jsonwebtoken');
 require('../../configs/passport');
 require('../../configs/localPassport')
 require('../../configs/fbPassport');
-;
+require('dotenv')
 
-const { setName,register } = require('../controllers/LoginControlller')
+
+const { setName, register } = require('../controllers/LoginControlller');
+const isAuth = require('../midlewares/isAuth');
 
 // google login
 router.get('/auth/google', passport.authenticate('google', {
@@ -17,7 +19,7 @@ router.get('/auth/google', passport.authenticate('google', {
 }));
 
 router.get('/auth/google/callback/', passport.authenticate('google', { session: false }), (req, res) => {
-    jwt.sign({ userId: req.user.id }, 'secretkey', { expiresIn: `${7 * 24 * 60} min` }, (err, token) => {
+    jwt.sign({ userId: req.user.id }, process.env.LOCAL_REGISTER_SECRET, { expiresIn: `${7 * 24 * 60} min` }, (err, token) => {
         if (err) {
             res.sendStatus(500);
         } else {
@@ -28,26 +30,26 @@ router.get('/auth/google/callback/', passport.authenticate('google', { session: 
 }
 );
 
-router.post('/auth/login', passport.authenticate('local', {session:false}));
+router.post('/auth/login', passport.authenticate('local', { session: false }));
 
-router.post('/auth/set/name', setName);
-router.post('auth/register',register);
+router.post('/auth/set/name',isAuth, setName);
+router.post('/auth/register', register);
 
 
 
 router.get('/auth/facebook',
-  passport.authenticate('facebook'));
+    passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { session: false }),(req, res) => {
-    jwt.sign({ userId: req.user.id }, 'secretkey', { expiresIn: `${7 * 24 * 60} min` }, (err, token) => {
-        if (err) {
-            res.sendStatus(500);
-        } else {
-            res.header('Header-Token', token)
-            res.send(token);
-        }
-    });
-}
-  );
+    passport.authenticate('facebook', { session: false }), (req, res) => {
+        jwt.sign({ userId: req.user.id }, process.env.LOCAL_REGISTER_SECRET, { expiresIn: `${7 * 24 * 60} min` }, (err, token) => {
+            if (err) {
+                res.sendStatus(500);
+            } else {
+                res.header('Header-Token', token)
+                res.send(token);
+            }
+        });
+    }
+);
 module.exports = router
