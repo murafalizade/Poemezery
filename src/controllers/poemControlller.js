@@ -3,7 +3,19 @@ const userModel = require('../models/userModel');
 const tagsModel = require('../models/tagModel');
 module.exports.allPoems = async (req, res) => {
     const poems = await poemModel.find({});
-    return res.status(200).send(poems)
+    const sendPoem = poems.map((poem)=>{return {
+        id:poem.id,
+        ownId:poem.ownId,
+        poet:poem.poet,
+        title:poem.title,
+        author:poem.author,
+        views:poem.views,
+        likes:poem.likes,
+        category: poem.category,
+        language: poem.language
+    }})
+    console.log(sendPoem)
+    return res.status(200).send(sendPoem)
 }
 
 module.exports.createPoem = async (req, res) => {
@@ -56,7 +68,7 @@ module.exports.onePoem = async (req, res) => {
 
 }
 module.exports.getBookmarks = async (req, res) => {
-    const user = await userModel.findOne({ id: req.user.userId });
+    const user = await userModel.findOne({ _id: req.user.userId });
     if (!user) return res.status(401).send('Please login or register');
     const bookMarkPoems = user.bookMarks;
     return res.status(200).send(bookMarkPoems);

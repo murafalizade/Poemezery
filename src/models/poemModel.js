@@ -6,7 +6,7 @@ const poemModel = mongoose.model('poem', new mongoose.Schema({
     ownId: String,
     tags: [],
     poet: String,
-    likes: {type:Number,default:0,min:0},
+    likes: [],
     align: {type:String,default:'center'},
     backgroundImg:String,
     views: {type:Number,default:0},

@@ -6,7 +6,7 @@ Router.get('/poems', allPoems);
 Router.post('/create-poem',isAuth, createPoem);
 Router.put('/my-poem/edit/:id', isAuth, editPoem);
 Router.get('/poems/:id', onePoem);
-Router.get('/bookmarks/poems', getBookmarks);
+Router.get('/bookmarks/poems',isAuth, getBookmarks);
 Router.get('/my-poems', isAuth, myPoems);
 
 module.exports = Router
