@@ -3,10 +3,9 @@ import Image from 'next/image'
 import styles from '../styles/Navbar.module.css'
 import { IoBookmarkOutline } from 'react-icons/io5'
 import { IoIosNotificationsOutline } from 'react-icons/io'
-import Head from 'next/head'
-import { Dropdown, DropdownButton } from 'react-bootstrap'
-export default function Layout({ children }) {
-    const [auth, setAuth] = useState(true)
+import Head from 'next/head';
+import { signOut } from "next-auth/client"
+export default function Layout({ children,auth }) {
     const [showDetails, setShowDetails] = useState(false)
     return (
         <>
@@ -42,7 +41,7 @@ export default function Layout({ children }) {
                                 <ul>
                                     <li><a href='/my-app'>Profile</a></li>
                                     <li><a href='/settings'>Settings</a></li>
-                                    <li><a href='#'>Log out</a></li>
+                                    <li><a href='#' type='button' onClick={()=>signOut({callbackUrl:'/'})}>Log out</a></li>
                                 </ul>
                             </div>
                         </div>

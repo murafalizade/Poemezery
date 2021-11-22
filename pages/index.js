@@ -1,7 +1,8 @@
 import axios from 'axios';
 import PoemCard from '../components/poemCard';
+import { getSession } from 'next-auth/client';
 
-export default function Home({ poems, tags, authors }) {
+export default function Home({ poems, tags, authors, profile }) {
   return (
     <div >
       <div className='container'>
@@ -10,7 +11,7 @@ export default function Home({ poems, tags, authors }) {
             <div className='row'>
               {!poems ? <div><p>No have any poems</p></div> : poems.map((poem, index) => (
                 <div className='col-md-6 col-12' key={index}>
-                  <PoemCard poem={poem} />
+                  <PoemCard session={profile} poem={poem} />
                 </div>
               ))}
             </div>
@@ -20,7 +21,7 @@ export default function Home({ poems, tags, authors }) {
             <div>
               <ul className='list-group'>
                 <p><b>Famous poet</b></p>
-                {authors.map((author)=>(<li key={author.id}><a href={`/authors/${author.id}`}>{author.penName}</a></li>))}
+                {authors.map((author, index) => (<li key={index}><a href={`/authors/${author.id}`}>{author.penName}</a></li>))}
               </ul>
             </div>
             <div>
@@ -40,15 +41,21 @@ export default function Home({ poems, tags, authors }) {
   )
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx) => {
   const poemsData = await axios.get('http://localhost:8080/api/v1/poems');
   const tagsData = await axios.get('http://localhost:8080/api/v1/tags');
-  const authorsData = await axios.get('http://localhost:8080/api/v1/authors')
+  const authorsData = await axios.get('http://localhost:8080/api/v1/authors');
+  const session = await getSession(ctx);
+  console.log(session)
+  const token = session.accessToken;
+  const profile = await axios.get(`http://localhost:8080/api/v1/my-profile/`, { headers: { 'Header-Token': token } });
+
   return {
     props: {
       poems: poemsData.data,
       tags: tagsData.data,
-      authors:authorsData.data
+      authors: authorsData.data,
+      profile: profile.data
     }
-  }
+    }
 }

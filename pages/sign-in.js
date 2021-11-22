@@ -1,5 +1,7 @@
 import React from 'react'
+import { getSession, useSession } from 'next-auth/client';
 import styles from '../styles/register.module.css'
+import Router from 'next/router';
 export default function SignIn() {
     return (
         <div>
@@ -16,3 +18,20 @@ export default function SignIn() {
         </div>
     )
 }
+
+
+export const getServerSideProps = async (ctx) =>{
+    const session = await getSession(ctx);
+    if (session) {
+        return {
+          redirect: {
+            destination: '/',
+            permanent: false,
+          },
+        }
+      }
+    
+      return {
+        props: { session }
+      }
+    }

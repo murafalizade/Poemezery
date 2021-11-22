@@ -1,9 +1,36 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import PoemCard from '../../components/poemCard'
 import Image from 'next/image'
 import axios from 'axios';
-export default function Authors({ user }) {
+import { useSession } from 'next-auth/client';
+import { useRouter } from 'next/dist/client/router';
+export default function Authors({ author }) {
+    const router = useRouter();
+    
+    const [session,loading] = useSession();
+    const [follow,setFollow] = useState(false);
+    const [fakeFlwCount,setFakeFlwCount] = useState(author.followers.length);
+    useEffect(()=>{
+        const trye = () =>{
+            const flwProof = author.followers.some((flw)=>flw.name===session?.user.name)
+            setFollow(flwProof)
+        }
+        trye();
+    },[session])
+    const followProfile = async () => {
+
+        if (!session) return router.push('/sign-in');
+        const confug = { headers: { 'Header-Token': session.accessToken } }
+        const data = await axios.put(`http://localhost:8080/api/v1/author/${author.id}/follow`,{name:'a'},confug)
+        if(data.status!='200'){
+            console.log(data)
+            return router.push('/');
+        }
+        setFollow(true)
+        setFakeFlwCount(fakeFlwCount+1);
+    }
+
     return (
         <div>
             <Container>
@@ -11,23 +38,23 @@ export default function Authors({ user }) {
                     <div style={{ textAlign: 'center' }}>
                         <div>
                             <div>
-                                <Image src={user.imgUrl} alt={`${`${user.penName} avatar`.replace(" ","_")}`} width='100px' height='100px' />
+                                <Image src={author.imgUrl} alt={`${`${author.penName} avatar`.replace(" ","_")}`} width='100px' height='100px' />
 
                             </div>
                             <div>
-                                <h4>{user.penName}</h4>
-                                <p style={{ color: '#9b9b9b' }}>{user.description}</p>
+                                <h4>{author.penName}</h4>
+                                <p style={{ color: '#9b9b9b' }}>{author.description}</p>
                             </div>
                         </div>
                         <div>
-                            <small style={{ color: '#9b9b9b' }}>{user.followers.length} followers     {user.following.length} following</small>
-                            <button className='btn btn-outline-success rounded mx-3'>Follow</button>
+                            <small style={{ color: '#9b9b9b' }}>{fakeFlwCount} followers     {author.following.length} following</small>
+                            <button onClick={()=>followProfile()} className={`btn ${follow?'btn-success':'btn-outline-success'} rounded mx-3`}>{follow?'Following':'Follow'}</button>
                         </div>
                     </div>
                 </Row>
                 <Row>
                     <Col md={4}>
-                        {user.poems.length === 0 ? (<p style={{textAlign:'center',fontSize:'20px',marginLeft:'100%',marginTop:'30%'}}>Not any poet</p>) : user.poems.map((poem) => (<PoemCard key={poem.id} poem={poem} />))}
+                        {author.poems.length === 0 ? (<p style={{textAlign:'center',fontSize:'20px',marginLeft:'100%',marginTop:'30%'}}>Not any poet</p>) : author.poems.map((poem) => (<PoemCard key={poem.id} poem={poem} />))}
                     </Col>
                 </Row>
             </Container>
@@ -56,7 +83,10 @@ export async function getStaticProps({ params }) {
     // params contains the post `id`.
     // If the route is like /posts/1, then params.id is 1
     const res = await axios.get(`http://localhost:8080/api/v1/authors/${params.author}`)
-    const user = res.data;
+    const author = res.data;
+
     // Pass post data to the page via props
-    return { props: { user } }
+    return { props: { author } }
 }
+
+

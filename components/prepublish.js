@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import styles from '../styles/prepublish.module.css'
 import TagInput from './tagInput'
-export default function PrePublish() {
+export default function PrePublish({profileInfo}) {
     const [align, setAlign] = useState('center')
     const [imageUrl, setImageUrl] = useState('')
     const [preview, setPreview] = useState('')
     const [checkeds,setChekceds] = useState(false)
-    console.log(imageUrl)
     useEffect(() => {
         if (imageUrl) {
             const reader = new FileReader()
@@ -68,7 +67,7 @@ export default function PrePublish() {
                                 <option value='Deppresive'>Deppresive</option>
                                 <option value='Neutral'>Neutral</option>
                             </select>
-                            <input  placeholder='Author of the peom' disabled={!checkeds} />
+                            <input value={profileInfo.penName}  placeholder='Author of the peom' disabled={!checkeds} />
                             <label>
                                 <input type='checkbox' onChange={(e)=>setChekceds(e.target.checked)} checked={checkeds}/>
                                 I am not author of the poem

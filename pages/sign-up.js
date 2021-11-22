@@ -17,3 +17,19 @@ export default function Register() {
         </div>
     )
 }
+
+export const getServerSideProps = async (ctx) =>{
+    const session = await getSession(ctx);
+    if (session) {
+        return {
+          redirect: {
+            destination: '/',
+            permanent: false,
+          },
+        }
+      }
+    
+      return {
+        props: { session }
+      }
+    }
