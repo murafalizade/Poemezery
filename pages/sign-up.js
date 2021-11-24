@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../styles/register.module.css'
-
+import { getSession } from 'next-auth/client'
 export default function Register() {
     return (
         <div>

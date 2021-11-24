@@ -1,15 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.css'; // Add this line
+import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/globals.css'
 import '../styles/Home.css'
 import { useEffect, useState } from 'react';
 import Layout from '../components/layout'
-import { getSession, Provider, useSession } from 'next-auth/client';
+import { getSession, Provider } from 'next-auth/client';
+import { wrapper } from '../Redux/reducer';
+import { useRouter } from 'next/router'
 function MyApp({ Component, pageProps }) {
   const [auth, setAuth] = useState(false);
   useEffect(() => {
     const authCheck = async () => {
       const session = await getSession();
-      console.log(session, 'session data')
       if (session !== null) {
         setAuth(true);
       }
@@ -18,17 +19,19 @@ function MyApp({ Component, pageProps }) {
       }
     }
     authCheck();
-    console.log(auth)
   }, [])
+  const router = useRouter();
+  const officailPage = ['/welcome', '/about', '/contact-us']
   return (
     <Provider session={pageProps.session}>
-      <Layout auth={auth}>
+      {!officailPage.includes(router.route) ? <Layout auth={auth}>
         <Component {...pageProps} />
-      </Layout>
+      </Layout> : <Component {...pageProps} />}
+
     </Provider>
 
   )
 }
 
 
-export default MyApp
+export default wrapper.withRedux(MyApp);

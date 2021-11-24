@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from '../styles/register.module.css'
 import { signIn } from 'next-auth/client'
 export default function SignUpEmail() {
-    const [user, setUser] = useState({ email: 'qulam@hotmail.com', password: 'qulu12345', comfirPassword: 'qulu12345' });
+    const [user, setUser] = useState({ email: '', password: '', comfirPassword: '' });
     const handleLogin = (e) => {
         e.preventDefault();
         if (user.comfirPassword === user.password) {

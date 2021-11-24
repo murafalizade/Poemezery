@@ -53,9 +53,10 @@ export default function Authors({ author }) {
                     </div>
                 </Row>
                 <Row>
-                    <Col md={4}>
-                        {author.poems.length === 0 ? (<p style={{textAlign:'center',fontSize:'20px',marginLeft:'100%',marginTop:'30%'}}>Not any poet</p>) : author.poems.map((poem) => (<PoemCard key={poem.id} poem={poem} />))}
-                    </Col>
+                        {author.poems.length === 0 ? (<p style={{textAlign:'center',fontSize:'20px',marginLeft:'100%',marginTop:'30%'}}>Not any poet</p>) : author.poems.map((poem) => (
+                        <Col  key={poem.id} md={4}>
+                            <PoemCard  poem={poem} />
+                            </Col>))}
                 </Row>
             </Container>
         </div>

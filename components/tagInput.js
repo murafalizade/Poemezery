@@ -1,16 +1,14 @@
 import React from 'react'
 import { WithContext as ReactTags } from 'react-tag-input';
-import styles from '../styles/prepublish.module.css'
-
-
+import { connect } from 'react-redux';
+import { addTags } from '../Redux/action';
 const KeyCodes = {
     comma: 188,
     enter: [10, 13],
 };
 
-const delimiters = [...KeyCodes.enter, KeyCodes.comma];
-
-export default class TagInput extends React.Component {
+const delimiters = [...KeyCodes.enter, KeyCodes.comma]
+ class TagInput extends React.Component {
     constructor(props) {
         super(props);
 
@@ -30,6 +28,7 @@ export default class TagInput extends React.Component {
     }
 
     handleAddition(tag) {
+        this.props.addTags([...this.state.tags,tag]);
         this.setState(state => ({ tags: [...state.tags, tag] }));
     }
 
@@ -51,3 +50,6 @@ export default class TagInput extends React.Component {
     }
 
 }
+
+
+export default connect(null,{addTags})(TagInput);

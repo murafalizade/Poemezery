@@ -1,52 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import Image from 'next/image'
-import { IoBookmarkOutline,IoBookmark } from 'react-icons/io5'
+import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5'
 import Head from 'next/head'
 import styles from '../../styles/poems.module.css'
 import axios from 'axios';
+import ReactHtmlParser from 'react-html-parser';
 import { useRouter } from 'next/dist/client/router'
 import { useSession } from 'next-auth/client';
 export default function Poems({ poem }) {
-    const [session, loading] = useSession();
+    const [session] = useSession();
     const [liked, setLiked] = useState(false);
     const router = useRouter();
     const [bk, setBk] = useState(false);
-    const [likeCount, setLikedCount] = useState(poem.likes);
-    useEffect(()=>{
-        console.log(poem.likes)
-        const flwProof = poem.likes.some((like)=>like.members?.some(member=>member.name===session?.user.name))
-        console.log(flwProof)
+    const [likeCount, setLikedCount] = useState(poem.likes.length);
+    useEffect(() => {
+        console.log(session?.user.name,poem.likes)
+        const flwProof = poem.likes.some((like) => like.name === session?.user.name);
+        const bookProof = poem.bookUser.some((bk) => bk.penName = session?.user.name);
+        setLiked(flwProof);
+        setBk(bookProof);
 
-    },[session])
+    }, [session])
     const addBookmark = async () => {
         if (!session) return router.push('/sign-in');
         const confug = { headers: { 'Header-Token': session.accessToken } }
-        const datas = await axios.post(`http://localhost:8080/api/v1/poem/${poem.id}/addbookmark`,{name:'a'}, confug);
+        const datas = await axios.put(`http://localhost:8080/api/v1/poem/${poem.id}/addbookmark`, { name: 'a' }, confug);
         if (datas.status != '200') {
             console.log(datas)
             return router.push('/');
         }
-        setBk(true);
+        if (datas.data === 'ADD') {
+            setBk(true);
+            console.log('ADD')
+        }
+        else {
+            setBk(false);
+        }
     }
 
-    const removeBookmark = async () => {
-        if (!session) return router.push('/sign-in');
-        const datas = await axios.post(`http://localhost:8080/api/v1/poem/${poem.id}/removebookmark`,{name:'a'} ,{
-            headers: {
-                'Header-Token': session.accessToken
-            }
-        });
-        if (datas.status != '200') {
-            console.log(datas)
-            return router.push('/');
-        }
-        setBk(false);
-    }
+
 
     const likePost = async () => {
         if (!session) return router.push('/sign-in');
-        const datas = await axios.put(`http://localhost:8080/api/v1/poem/${poem.id}/like`,{name:'a'} ,{
+        const datas = await axios.put(`http://localhost:8080/api/v1/poem/${poem.id}/like`, { name: 'a' }, {
             headers: {
                 'Header-Token': session.accessToken
             }
@@ -55,11 +52,11 @@ export default function Poems({ poem }) {
             console.log(datas)
             return router.push('/');
         }
+        if (datas.data === 'LIKE') {
             setLiked(true);
             setLikedCount(likeCount + 1)
-    }
-    const removeLikePost = () => {
-        if (session) {
+        }
+        else {
             setLiked(false);
             setLikedCount(likeCount !== 0 ? likeCount - 1 : likeCount)
         }
@@ -70,17 +67,18 @@ export default function Poems({ poem }) {
                 <title>"{poem.title}" - Social Network for poem</title>
             </Head>
             <h3>{poem.title}</h3>
-            <p>{poem.poet}</p>
+            <p>{ReactHtmlParser(poem.poetHTML)}</p>
+            <small><i>Author: {poem.author}</i></small>
             <div className={styles.authorBox}>
                 <div>
                     <Image src='/default_avatar.png' width='50px' height='50px' alt='avatar_image' />
-                    <span className={styles.info}><a href={`/authors/${poem.ownId}`}>{poem.author}</a><br />
+                    <span className={styles.info}><a href={`/authors/${poem.ownId}`}>{poem.owner}</a><br />
                         <small>12.02.2021</small></span>
                 </div>
 
                 <div className={styles.shares}>
-                    <button className='like'>{liked ? <BsHeartFill size={'25px'} onClick={() => removeLikePost()} /> : <BsHeart size={'25px'} onClick={() => likePost()} />} <span>{likeCount}</span></button>
-                    <span>{bk?<IoBookmark onClick={()=>removeBookmark()} size={'25px'}/>:<IoBookmarkOutline onClick={()=>addBookmark()} size={'25px'} />}</span>
+                    <button className='like'>{liked ? <BsHeartFill size={'25px'} onClick={() => likePost()} /> : <BsHeart size={'25px'} onClick={() => likePost()} />} <span>{likeCount}</span></button>
+                    <span>{bk ? <IoBookmark onClick={() => addBookmark()} size={'25px'} /> : <IoBookmarkOutline onClick={() => addBookmark()} size={'25px'} />}</span>
                     <span><a href='/#'>Share</a></span>
                 </div>
             </div>

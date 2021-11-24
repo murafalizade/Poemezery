@@ -17,7 +17,7 @@ export default function WritePoem({profile}) {
 }
 export const getServerSideProps = async (ctx) =>{
     const session = await  getSession(ctx);
-    const myProfile = await axios.get(`http://localhost:8080/api/v1/my-profile/`,{headers:{'Header-Token':session.accessToken}});
+    const myProfile = await axios.get(`http://localhost:8080/api/v1/my-profile/`,{headers:{'Header-Token':session?.accessToken}});
     return {
         props:{
             profile:myProfile.data

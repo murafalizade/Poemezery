@@ -1,5 +1,4 @@
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import { getSession } from 'next-auth/client';
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
@@ -19,7 +18,6 @@ export default function Bookmarks({ bookMarks, session }) {
                         </Row>
                     </>
                 ) : <h3>Please <a href='/sign-in'>Login</a></h3>}
-
             </Container>
         </div>
     )
