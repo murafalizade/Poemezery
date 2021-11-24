@@ -59,22 +59,23 @@ module.exports.poemLike = async (req, res) => {
     if (!poem) return res.status(404).send('doens find');
     const profile = await userModel.findOne({ _id: req.user.userId });
     if (!profile) return res.status(404).send('Author doesnt find');
-    const operation = profile.liked.includes(poem.id);
+    const operation = profile.liked.some((id)=>id===poem.id);
+    let proccess;
     if(!operation){
         profile.liked.push(poem.id);
-        poem.likes.members.push({id:profile.id,name:profile.penName});
-        poem.likes.count +=1;
+        poem.likes.push({id:profile.id,name:profile.penName});
+        proccess = 'LIKE';
     }
     else{
         const newLiked = profile.liked.filter(flw => flw !== poem.id);
-        const newMembers = poem.likes.members.filter(mem=>mem.id !==profile.id);
-        poem.likes.members = newMembers;
+        const newMembers = poem.likes.filter(mem=>mem.id !==profile.id);
+        poem.likes = newMembers;
         profile.liked = newLiked;
-        poem.likes.count -= 1;
+        proccess = 'DISLIKE';
     }
     await profile.save();
     await poem.save();
-    res.status(200).send('Success');
+    res.status(200).send(proccess);
 }
 
 module.exports.PoemAddBookmark = async (req, res) => {
@@ -83,14 +84,20 @@ module.exports.PoemAddBookmark = async (req, res) => {
     const profile = await userModel.findOne({ _id: req.user.userId });
     if (!profile) return res.status(404).send('Author doesnt find');
     const operation = profile.bookMarks.some((bk)=>bk===poem);
-    console.log(operation)
+    let process;
     if(!operation){
         profile.bookMarks.push(poem);
+        poem.bookUser.push({penName:profile.penName})
+        process = 'ADD';
     }
     else{
         const newBookMarks = profile.bookMarks.filter(bk => bk.id !== poem.id);
-        profile.bookMarks = newBookMarks;    
+        const newPoemUser = poem.bookUser.filter(bk => bk.penName !== profile.penName);
+        poem.bookUser = newPoemUser;
+        profile.bookMarks = newBookMarks;
+        process = 'REMOVE'
     }
     await profile.save();
-    res.status(200).send('Success');
+    await poem.save();
+    res.status(200).send(process);
 }
