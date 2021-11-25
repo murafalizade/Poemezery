@@ -13,7 +13,7 @@ export default function SignIn() {
                     <a className={styles.linkButton} href='#'>Continue Google</a>
                     <a className={styles.linkButton} href='/sign-in-email'>Continue Email</a>
                 </fieldset>
-                <small className={styles.quote}>Don't have an account yet? <a className='link' href='/sign-up'>Register now</a></small>
+                <small className={styles.quote}>Don&apos;t have an account yet? <a className='link' href='/sign-up'>Register now</a></small>
             </form>
         </div>
     )

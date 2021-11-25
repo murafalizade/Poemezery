@@ -31,3 +31,6 @@ ul {
   margin-top: -15px;
   background-color: transparent; 
 }
+section{
+  height: 100vh;
+}

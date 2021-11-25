@@ -34,10 +34,13 @@
     "react-html-parser": "^2.0.2",
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.6",
+    "react-spring": "^9.3.2",
+    "react-spring-3d-carousel": "^1.2.1",
     "react-tag-input": "^6.7.3",
     "react-text-truncate": "^0.17.0",
     "redux": "^4.1.2",
-    "swr": "^1.0.1"
+    "swr": "^1.0.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "7",
