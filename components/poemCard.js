@@ -4,10 +4,11 @@ import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5'
 import TextTruncate from 'react-text-truncate'
 import { useRouter } from 'next/dist/client/router'
 import axios from 'axios'
+import Link from 'next/link'
 import { useSession } from 'next-auth/client'
 export default function PoemCard({ poem }) {
     const router = useRouter();
-    const [session, loading] = useSession();
+    const [session] = useSession();
     const [auth, setAuth] = useState(false);
     useEffect(() => {
         const bookProof = poem.bookUser.some((bk)=>bk.penName =session?.user.name);
@@ -30,15 +31,15 @@ export default function PoemCard({ poem }) {
     return (
         <div className={styles.card}>
             <div className={styles.cardBody}>
-                <h3><a href={`/poems/${poem.id}`}>{poem.title}</a></h3>
+                <h3><Link href={`/poems/${poem.id}`}>{poem.title}</Link></h3>
                 <TextTruncate
                     line={5}
                     element='p'
-                    textTruncateChild={<a href={`/poems/${poem.id}`}>Read More</a>}
+                    textTruncateChild={<Link href={`/poems/${poem.id}`}>Read More</Link>}
                     text={poem.poet} />
             </div>
             <div className={styles.cardFooter}>
-                <span><a href={`/authors/${poem.ownId}`}>{poem.owner}</a></span>
+                <span><Link href={`/authors/${poem.ownId}`}>{poem.owner}</Link></span>
                 <div>
                     {
 

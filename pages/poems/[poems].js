@@ -8,6 +8,7 @@ import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
 import { useRouter } from 'next/dist/client/router'
 import { useSession } from 'next-auth/client';
+import Link from 'next/dist/client/link';
 export default function Poems({ poem }) {
     const [session] = useSession();
     const [liked, setLiked] = useState(false);
@@ -64,10 +65,10 @@ export default function Poems({ poem }) {
     return (
         <div style={{ textAlign: poem.align, backgroundImage: `url(${poem.backgroundImg ? poem.backgroundImg : '#'})`, padding: '20px' }}>
             <Head>
-                <title>"{poem.title}" - Social Network for poem</title>
+                <title>&quot;{poem.title}&quot; - Social Network for poem</title>
             </Head>
             <h3>{poem.title}</h3>
-            <p>{ReactHtmlParser(poem.poetHTML)}</p>
+            <span>{ReactHtmlParser(poem.poetHTML)}</span>
             <small><i>Author: {poem.author}</i></small>
             <div className={styles.authorBox}>
                 <div>
@@ -79,33 +80,25 @@ export default function Poems({ poem }) {
                 <div className={styles.shares}>
                     <button className='like'>{liked ? <BsHeartFill size={'25px'} onClick={() => likePost()} /> : <BsHeart size={'25px'} onClick={() => likePost()} />} <span>{likeCount}</span></button>
                     <span>{bk ? <IoBookmark onClick={() => addBookmark()} size={'25px'} /> : <IoBookmarkOutline onClick={() => addBookmark()} size={'25px'} />}</span>
-                    <span><a href='/#'>Share</a></span>
+                    <span><Link href='/#'>Share</Link></span>
                 </div>
             </div>
         </div>
     )
 }
 export async function getStaticPaths() {
-    // Call an external API endpoint to get posts
     const res = await axios.get('http://localhost:8080/api/v1/poems')
     const poems = res.data;
 
-    // Get the paths we want to pre-render based on posts
     const paths = poems.map((poem) => ({
         params: { poems: poem.id.toString() },
     }))
 
-    // We'll pre-render only these paths at build time.
-    // { fallback: false } means other routes should 404.
     return { paths, fallback: false }
 }
 
-// This also gets called at build time
 export async function getStaticProps({ params }) {
-    // params contains the post `id`.
-    // If the route is like /posts/1, then params.id is 1
     const res = await axios.get(`http://localhost:8080/api/v1/poems/${params.poems}`)
     const poem = res.data;
-    // Pass post data to the page via props
     return { props: { poem }, revalidate: 30 }
 }

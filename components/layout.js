@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState,useRef ,useEffect} from 'react'
 import Image from 'next/image'
 import styles from '../styles/Navbar.module.css'
 import { IoBookmarkOutline } from 'react-icons/io5'
 import { IoIosNotificationsOutline } from 'react-icons/io'
 import Head from 'next/head';
+import Link from 'next/dist/client/link'
 import { signOut } from "next-auth/client"
 export default function Layout({ children,auth }) {
     const [showDetails, setShowDetails] = useState(false)
+
     return (
         <>
             <Head>
@@ -16,13 +18,13 @@ export default function Layout({ children,auth }) {
             </Head>
             <nav>
                 <div className={styles.navbar}>
-                    <h3><a href='/'>Poemezery</a></h3>
+                    <h3><Link href='/'>Poemezery</Link></h3>
                     <form action='/' method='GET'>
                         <input placeholder='Search ...' type='text' />
                     </form>
                     {!auth ? <div className={styles.form}>
-                        <a href='/sign-in' className={styles.btn}>Login</a>
-                        <a href='/sign-up' className={styles.btn}>Get Started</a>
+                        <Link href='/sign-in'><a className={styles.btn}>Login</a></Link>
+                        <Link href='/sign-up'><a  className={styles.btn}>Get Started</a></Link>
                     </div> : <div className={styles.form}>
                         <div className='dropdown'>
                             <div className={styles.icons}><IoIosNotificationsOutline size={'30px'} /></div>
@@ -30,18 +32,18 @@ export default function Layout({ children,auth }) {
                                 <p> Not new notifications yet</p>
                             </div>
                         </div>
-                        <div className={styles.icons}><a href='/bookmarks' ><IoBookmarkOutline size={'30px'} /></a></div>
+                        <div className={styles.icons}><Link href='/bookmarks' ><IoBookmarkOutline size={'30px'} /></Link></div>
                         <div>
-                            <Image onMouseDown={() => setShowDetails(!showDetails)} src='/default_avatar.png' width='40px' height='40px' alt='avatar_image' />
-                            <div style={showDetails ? { display: 'block' } : { display: 'none' }} className={styles.secretSection}>
+                            <Image  onMouseUp={() => setShowDetails(!showDetails)} src='/default_avatar.png' width='40px' height='40px' alt='avatar_image' />
+                            <div onBlur={() => {setShowDetails(false);console.log('asda')}} style={showDetails ? { display: 'block' } : { display: 'none' }} className={styles.secretSection}>
                                 <ul>
-                                    <li><a href='/my-poems'>Poems</a></li>
-                                    <li><a href='/write-poem'>Write Poems</a></li>
+                                    <li><Link href='/my-poems'>Poems</Link></li>
+                                    <li><Link href='/write-poem'>Write Poems</Link></li>
                                 </ul>
                                 <ul>
-                                    <li><a href='/my-app'>Profile</a></li>
-                                    <li><a href='/settings'>Settings</a></li>
-                                    <li><a href='#' type='button' onClick={()=>signOut({callbackUrl:'/'})}>Log out</a></li>
+                                    <li><Link href='/my-app'>Profile</Link></li>
+                                    <li><Link href='/settings'>Settings</Link></li>
+                                    <li><Link type='button' onClick={()=>signOut({callbackUrl:'/'})}>Log out</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -53,11 +55,11 @@ export default function Layout({ children,auth }) {
             </main>
             <footer className={styles.footer}>
                 <ul>
-                    <li><a href='/about'>About</a></li>
-                    <li><a href='/contact-us'>Contact us</a></li>
-                    <li><a href='/privacy'>Privacy</a></li>
-                    <li><a href='/tio'>Terms of services</a></li>
-                    <li><a href='/'>Poems</a></li>
+                    <li><Link href='/about'>About</Link></li>
+                    <li><Link href='/contact-us'>Contact us</Link></li>
+                    <li><Link href='/privacy'>Privacy</Link></li>
+                    <li><Link href='/tio'>Terms of services</Link></li>
+                    <li><Link href='/'>Poems</Link></li>
                 </ul>
             </footer>
         </>

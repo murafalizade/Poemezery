@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/client';
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import PoemCard from '../components/poemCard'
-
+import Link from 'next/dist/client/link';
 export default function Bookmarks({ bookMarks, session }) {
     return (
         <div>
@@ -14,10 +14,10 @@ export default function Bookmarks({ bookMarks, session }) {
                             {bookMarks!==[] ? bookMarks.map((pm) => (
                                 <Col key={pm.id} md={4}>
                                     <PoemCard poem={pm} />
-                                </Col>)) : <p>You don't have any Bookmarks</p>}
+                                </Col>)) : <p>You don&apos;t have any Bookmarks</p>}
                         </Row>
                     </>
-                ) : <h3>Please <a href='/sign-in'>Login</a></h3>}
+                ) : <h3>Please <Link href='/sign-in'>Login</Link></h3>}
             </Container>
         </div>
     )

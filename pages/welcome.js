@@ -3,10 +3,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
 import { Col, Container, Row } from 'react-bootstrap'
+import { useRouter } from 'next/dist/client/router';
 import styles from '../styles/Landingpage.module.css'
-const Coursels = dynamic(() => import('../components/carousel'),{ ssr: false })
+const Coursels = dynamic(() => import('../components/carousel'), { ssr: false })
+
 
 export default function Welcome() {
+    const router = useRouter()
     return (
         <div className={styles.page}>
             <Head>
@@ -17,10 +20,10 @@ export default function Welcome() {
                     <div>
                         <h3>Poemezery</h3>
                     </div>
-                    <div className='d-flex'>
+                    <div className={styles.navbr}>
                         <Link href='/about'>About</Link>
                         <Link href='/contact-us'>Contact us</Link>
-                        <button className='btn btn-outline-success h-30 rounded-pill'>Get Startted</button>
+                        <button onClick={()=>router.push('/sign-up')} className='btn btn-outline-success h-30 rounded-pill'>Get Startted</button>
                     </div>
                 </div>
             </nav>
@@ -29,9 +32,9 @@ export default function Welcome() {
                     <Row>
                         <Col md={6}>
                             <div className={styles.content}>
-                                <h1>Reading book is fun & easier than ever.</h1>
-                                <p>One glance at a book and you hear the voice of another person, perhaps this dead for 1,000 years. To read is to voyage through time.</p>
-                                <button className={`btn btn-outline-success ${styles.startedBtn}   rounded-pill`}>Get Startted</button>
+                                <h1>Writing poem is fun & easier than ever.</h1>
+                                <p>One glance at a poem and you hear the music of poem, perhaps this dead for 1,000 years. To read is to voyage through time.</p>
+                                <button onClick={()=>router.push('/sign-up')} className={`btn btn-outline-success ${styles.startedBtn}  ${styles.slideInLeft}  rounded-pill`}>Get Startted</button>
                             </div>
                         </Col>
                         <Col md={6}>
@@ -40,23 +43,27 @@ export default function Welcome() {
                     </Row>
                 </Container>
             </section>
+            <Container fluid>
+                <Row>
             <div className={styles.miniSec}>
-                <p className={styles.paragraphOfPage}>Talking book, happiness, lifestyle and everything that’s realted books.</p>
+                <p className={styles.paragraphOfPage}>Telling poem, happiness, lifestyle and everything that’s realted poems.</p>
                 <button className='btn'>Join us Telegram</button>
             </div>
+            </Row>
+            </Container>
             <section className={styles.secondSec}>
                 <Container className='text-center'>
                     <Row style={{ justifyContent: 'center' }}>
                         <div className={styles.secondContent}>
-                            <h1>Read unlimited books, the biggest online library.</h1>
-                            <p>We know it can be really tough to read new books nowadays with our busy life. That’s the reason we’ve made booklov for you.</p>
+                            <h1>Read unlimited poems, the biggest online library.</h1>
+                            <p>We know it can be really tough to read new poems nowadays with our busy life. That’s the reason we’ve made poemezery for you.</p>
                         </div>
                         <Col md={12}>
 
                             <Row>
                                 <Col md={4}>
                                     <Image src={'/service-icon1.svg'} width='76px' height='80px' />
-                                    <h5>Largest Collection of Books</h5>
+                                    <h5>Largest Collection of Poems</h5>
                                 </Col>
                                 <Col md={4}>
                                     <Image src={'/service-icon2.svg'} width='76px' height='80px' />
@@ -65,7 +72,7 @@ export default function Welcome() {
                                 </Col>
                                 <Col md={4}>
                                     <Image src={'/service-icon3.svg'} width='76px' height='80px' />
-                                    <h5>Unlimited Books, Anytime you want</h5>
+                                    <h5>Unlimited Poems, Anytime you want</h5>
                                 </Col>
                             </Row>
                         </Col>
@@ -75,37 +82,37 @@ export default function Welcome() {
 
 
 
-            <section>
+            <section className='pt-5 mt-5'>
                 <Container>
                     <Row>
                         <h1>Categories of Poems</h1>
                         <p>Choose one of them and started reading poetry.</p>
                         <Col md={4}>
                             <div data-color='red' className={styles.catBox}>
-                                <Link href='/poems'>
-                                    <p className={styles.catBoxTitle} >Love &#8594;</p></Link></div>
+                                <Link href='/'>
+                                    <p className={styles.catBoxTitle} >Blank verse</p></Link></div>
                         </Col>
                         <Col md={4}>
                             <div className={styles.catBox}>
-                                <Link href='/poems'>
-                                    <p className={styles.catBoxTitle} >Happy  &#8594;</p></Link>
+                                <Link href='/'>
+                                    <p className={styles.catBoxTitle} >Rhymed poetry</p></Link>
                             </div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/poems'>
-                                <p className={styles.catBoxTitle} >Sad  &#8594;</p></Link></div>
+                            <div className={styles.catBox}> <Link href='/'>
+                                <p className={styles.catBoxTitle} >Free verse</p></Link></div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/poems'>
-                                <p className={styles.catBoxTitle} >Country  &#8594;</p></Link></div>
+                            <div className={styles.catBox}> <Link href='/'>
+                                <p className={styles.catBoxTitle} >Epics </p></Link></div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/poems'>
-                                <p className={styles.catBoxTitle} >Depressive  &#8594;</p></Link></div>
+                            <div className={styles.catBox}> <Link href='/'>
+                                <p className={styles.catBoxTitle} >Narrative poetry</p></Link></div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/poems'>
-                                <p className={styles.catBoxTitle} >Mother  &#8594;</p></Link></div>
+                            <div className={styles.catBox}> <Link href='/'>
+                                <p className={styles.catBoxTitle} >Haiku</p></Link></div>
                         </Col>
                     </Row>
                 </Container>
@@ -114,24 +121,17 @@ export default function Welcome() {
 
 
             <section>
-                <Container style={{marginTop:'120px'}}>
+                <Container style={{ marginTop: '120px' }}>
                     <Row>
                         <Col md={6}>
                             <div className={styles.wrapper}>
-                                <div className={styles.cover}>
-                                    <p >
-                                        Shall I compare thee to a summer’s day?<br />
-                                        Shall I compare thee to a summer’s day?<br/>
-                                        Shall I compare thee to a summer’s day?<br/>
-                                        Shall I compare thee to a summer’s day?<br/>
-                                
-                                    </p>
-                                </div>
+                                <Image src="/poemExample.png"
+                                    style={{ border: '1px solid black' }} width='330px' height='430px' alt="1" />
                             </div>
                         </Col>
                         <Col md={6}>
-                            <h1>Over one million books at your hand.</h1>
-                            <p>One glance at a book and you hear the voice of another person, perhaps someone dead for 1,000 years. To read is to voyage through time.</p>
+                            <h1>Over one million poems at your hand.</h1>
+                            <p>One glance at a poem and you hear the music of poem, perhaps this dead for 1,000 years. To read is to voyage through time.</p>
                         </Col>
                     </Row>
                 </Container>
@@ -165,7 +165,7 @@ export default function Welcome() {
                         <Row style={{ justifyContent: 'center', height: '0' }}>
                             <div style={{ position: 'relative', top: '-900px' }} className={styles.secondContent}>
                                 <h1 style={{ textAlign: 'center' }}>Success Story</h1>
-                                <p style={{ textAlign: 'center' }}>Have you ever made friends while reading books with Booklov? We would love to hear your story</p>
+                                <p style={{ textAlign: 'center' }}>Have you ever made friends while reading poem with Poemezery? We would love to hear your story</p>
                                 <button className='btn'>share your story</button>
                             </div>
                         </Row>
@@ -175,18 +175,18 @@ export default function Welcome() {
                 </div>
             </section>
             <div style={{ backgroundColor: '#f4fcff', height: '50vh' }} className={`text-center pt-5`}>
-                <h1 style={{ textAlign: 'center' }}>Don't be shy, say hi!</h1>
-                <p style={{ textAlign: 'center' }}>Talk about books, happiness, lifestyle and everything that’s realted books.</p>
-                <button className={`btn btn-outline-success ${styles.startedBtn}   rounded-pill`}>Get started</button>
+                <h1 style={{ textAlign: 'center' }}>Don&apos;t be shy, say hi!</h1>
+                <p style={{ textAlign: 'center' }}>Telling about poems, happiness, lifestyle and everything that’s realted poems.</p>
+                <button onClick={()=>router.push('/sign-up')} className={`btn btn-outline-success ${styles.startedBtn}   rounded-pill`}>Get started</button>
             </div>
 
             <footer className={styles.footer}>
                 <ul>
-                    <li><a href='/about'>About</a></li>
-                    <li><a href='/contact-us'>Contact us</a></li>
-                    <li><a href='/privacy'>Privacy</a></li>
-                    <li><a href='/tio'>Terms of services</a></li>
-                    <li><a href='/'>Poems</a></li>
+                    <li><Link href='/about'>About</Link></li>
+                    <li><Link href='/contact-us'>Contact us</Link></li>
+                    <li><Link href='/privacy'>Privacy</Link></li>
+                    <li><Link href='/tio'>Terms of services</Link></li>
+                    <li><Link href='/'>Poems</Link></li>
                 </ul>
             </footer>
         </div>

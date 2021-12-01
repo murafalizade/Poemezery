@@ -7,8 +7,7 @@ import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 export default function Authors({ author }) {
     const router = useRouter();
-    
-    const [session,loading] = useSession();
+    const [session] = useSession();
     const [follow,setFollow] = useState(false);
     const [fakeFlwCount,setFakeFlwCount] = useState(author.followers.length);
     useEffect(()=>{
@@ -54,7 +53,7 @@ export default function Authors({ author }) {
                 </Row>
                 <Row>
                         {author.poems.length === 0 ? (<p style={{textAlign:'center',fontSize:'20px',marginLeft:'100%',marginTop:'30%'}}>Not any poet</p>) : author.poems.map((poem) => (
-                        <Col  key={poem.id} md={4}>
+                        <Col  key={poem._id} md={4}>
                             <PoemCard  poem={poem} />
                             </Col>))}
                 </Row>

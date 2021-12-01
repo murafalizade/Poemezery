@@ -53,5 +53,5 @@ const options = {
     error: '/sign-up-email' // Changing the error redirect page to our custom login page
   }
 }
-
-export default (req, res) => NextAuth(req, res, options)
+const auth = (req, res) => NextAuth(req, res, options)
+export default auth

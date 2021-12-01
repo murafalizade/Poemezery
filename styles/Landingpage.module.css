@@ -162,7 +162,7 @@ text-align: center;
     display: block;
     width: 100%;
     height: 100%;
-    background-color:red;
+    background-color:blue;
     transform-origin: 0 bottom 0;
     transform: scaleY(0);
     transition: 0.4s ease-out;
@@ -186,8 +186,8 @@ text-align: center;
 
 
 .wrapper {
-    width: 350px;
-    height: 400px;
+    width: 334px;
+    height: 438px;
     position: relative;
 }
 .wrapper::before, .wrapper::after {
@@ -220,4 +220,35 @@ text-align: center;
     width: 250px;
     height: 300px;
     padding: 20px;
+}
+
+
+.navbr{
+    display: flex;
+}
+.navbr a{
+    margin-left: 20px;
+    margin-top: 7px;
+}
+.navbr button{
+    margin-left: 50px;
+}
+.wrapper span{
+    border: 1px solid;
+}
+.slideInLeft{
+    position: absolute;
+    left: -250px;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 1s;
+    animation: slide 0.4s forwards ease-in;
+    animation-delay: 0.4s;
+}
+
+@-webkit-keyframes slide {
+    100% { left: 0; }
+}
+
+@keyframes slide {
+    100% { left: 100px; }
 }

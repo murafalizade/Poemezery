@@ -3,6 +3,7 @@ import { Col, Form, Row } from 'react-bootstrap'
 import styles from '../styles/prepublish.module.css'
 import TagInput from './tagInput'
 import { useSelector } from 'react-redux'
+import Link from 'next/link'
 import axios from 'axios';
 import {useSession} from 'next-auth/client'
 import { useRouter } from 'next/dist/client/router'
@@ -107,7 +108,7 @@ export default function PrePublish({ profileInfo }) {
                         </Col>
                     </Row>
                     <div className={styles.endOfModal}>
-                        <a href='/write-poem'>Cancel</a>
+                        <Link href='/write-poem'>Cancel</Link>
                         <button onClick={()=>sumbitHandeler()} className='btn btn-outline-success rounded '>Publish</button>
                     </div>
                 </div>

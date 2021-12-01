@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Carousel from "react-spring-3d-carousel";
 import uuidv4 from "uuid";
+import Image from 'next/image'
 import { config } from "react-spring";
 export default class Coursels extends Component {
   state = {
@@ -12,24 +13,23 @@ export default class Coursels extends Component {
 
   slides = [
     {
-      key: 'uuidv4()',
-      content: <img src="https://picsum.photos/800/801/?random"  width='400px' alt="1" />
+      key: 'as',
+      content: <Image src="https://dogtrainingobedienceschool.com/pic/2286825_full-jaroslav-seifert-quotes-time-joyce-sutphen-cool-words-nature-quotes-nature-poem.jpg"  width='400px' alt="2" />
     },
     {
-      key: 'as',
-      content: <img src="https://picsum.photos/800/802/?random"  width='400px' alt="2" />
+      key: 'uuidv4()',
+      content: <Image src="https://static.poetryfoundation.org/jstor/i20604849/pages/27.png"  width='400px' alt="1" />
     },
     {
       key: 'asd',
-      content: <img src="https://picsum.photos/600/803/?random" width='400px'  alt="3" />
+      content: <Image src="https://static.poetryfoundation.org/jstor/i20604990/pages/5.png" width='400px'  alt="3" />
     },
     {
       key:'asdsad',
-      content: <img src="https://picsum.photos/800/500/?random" width='400px'  alt="4" />
-    },
-    {
-      key:'asdsdq',
-      content: <img src="https://picsum.photos/800/804/?random"  width='400px' alt="5" />
+      content: <Image src="https://static.poetryfoundation.org/jstor/i20596657/pages/15.png" width='400px'  alt="4" />
+    },{
+      key:'asdad',
+      content: <Image src='https://dogtrainingobedienceschool.com/pic/7171158_full-cousin-quotes-from-tumblr-quotes-poem-danal-bjgmc-tb-org.jpg' width='400px' alt='5' />
     }
   ].map((slide, index) => {
     return { ...slide, onClick: () => this.setState({ goToSlide: index }) };
@@ -43,8 +43,9 @@ export default class Coursels extends Component {
 
   render() {
     return (
-      <div style={{ width: "300px", height: "500px", margin: "0 auto" }}>
+      <div style={{ width: "300px", height: "500px", margin: "-55px auto" }}>
         <Carousel
+        withLoop={true}
           slides={this.slides}
           goToSlide={this.state.goToSlide}
           offsetRadius={this.state.offsetRadius}

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import PoemCard from '../components/poemCard';
+import Link from 'next/link'
 export default function Home({ poems, tags, authors }) {
   const famousAuthors = authors.sort((a, b) => a.followers?.length - b.followers?.length < 0 ? 1 : -1).slice(0, 4).map((x) => {
     return {
@@ -28,14 +29,14 @@ export default function Home({ poems, tags, authors }) {
             <div>
               <ul className='list-group'>
                 <p><b>Famous poet</b></p>
-                {famousAuthors.map((author, index) => (<li key={index}><a href={`/authors/${author.id}`}>{author.penName}</a></li>))}
+                {famousAuthors.map((author, index) => (<li key={index}><Link href={`/authors/${author.id}`}>{author.penName}</Link></li>))}
               </ul>
             </div>
             <div>
               <p><b>Top tag of weeks</b></p>
               <div className='tags'>
                 {famousTags.map((tag) => (
-                  <a key={tag._id} href={`/query?q=${tag.id}`}><span>{tag.name}</span></a>
+                  <Link key={tag._id} passHref={true} href={`/query?q=${tag.id}`}><span>{tag.name}</span></Link>
                 ))}
               </div>
             </div>
