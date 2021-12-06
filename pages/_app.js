@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/globals.css'
-import '../styles/Home.css'
 import { useEffect, useState } from 'react';
 import Layout from '../components/layout'
 import { getSession, Provider } from 'next-auth/client';
@@ -27,7 +26,6 @@ function MyApp({ Component, pageProps }) {
       {!officailPage.includes(router.route) ? <Layout auth={auth}>
         <Component {...pageProps} />
       </Layout> : <Component {...pageProps} />}
-
     </Provider>
 
   )

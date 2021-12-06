@@ -36,7 +36,7 @@ export default function Home({ poems, tags, authors }) {
               <p><b>Top tag of weeks</b></p>
               <div className='tags'>
                 {famousTags.map((tag) => (
-                  <Link key={tag._id} passHref={true} href={`/query?q=${tag.id}`}><span>{tag.name}</span></Link>
+                  <Link key={tag._id} passHref={true} href={`/poems/poem?tag=${tag.name}`}><span>{tag.name}</span></Link>
                 ))}
               </div>
             </div>
@@ -47,7 +47,7 @@ export default function Home({ poems, tags, authors }) {
   )
 }
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async () => {
   const poemsData = await axios.get('http://localhost:8080/api/v1/poems');
   const tagsData = await axios.get('http://localhost:8080/api/v1/tags');
   const authorsData = await axios.get('http://localhost:8080/api/v1/authors');

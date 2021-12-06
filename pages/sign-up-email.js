@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from 'next/link';
 import styles from '../styles/register.module.css'
 import { signIn } from 'next-auth/client'
 export default function SignUpEmail() {
@@ -40,7 +41,7 @@ export default function SignUpEmail() {
                     type='password' required />
                 <button onClick={(e) => handleLogin(e)} className={styles.submitButton} >Get Started</button><br />
             </form>
-            <small className={styles.quote}>Already have an account?<a className='link' href='/sign-in'>Log in</a></small>
+            <small className={styles.quote}>Already have an account?<Link href='/sign-in'><a className='link'>Log in</a></Link></small>
         </div>
     )
 }

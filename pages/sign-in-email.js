@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../styles/register.module.css'
-
+import Link from 'next/link'
 export default function SignInEmail() {
     return (
         <div>
@@ -10,7 +10,7 @@ export default function SignInEmail() {
            <input className={styles.formInput} placeholder='Password' type='password'/>
            <button className={styles.submitButton} >Log in</button><br/>
        </form>
-       <small className={styles.quote}>Forget password?<a  className='link' href='/'>Reset Password</a></small>
+       <small className={styles.quote}>Forget password?<Link href='/'><a  className='link' >Reset Password</a></Link></small>
 
    </div>
     )

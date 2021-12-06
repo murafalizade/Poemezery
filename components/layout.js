@@ -19,7 +19,7 @@ export default function Layout({ children,auth }) {
             <nav>
                 <div className={styles.navbar}>
                     <h3><Link href='/'>Poemezery</Link></h3>
-                    <form action='/' method='GET'>
+                    <form  role='search' action='/poems/poem?tag=Poem'>
                         <input placeholder='Search ...' type='text' />
                     </form>
                     {!auth ? <div className={styles.form}>
@@ -35,7 +35,7 @@ export default function Layout({ children,auth }) {
                         <div className={styles.icons}><Link href='/bookmarks' ><IoBookmarkOutline size={'30px'} /></Link></div>
                         <div>
                             <Image  onMouseUp={() => setShowDetails(!showDetails)} src='/default_avatar.png' width='40px' height='40px' alt='avatar_image' />
-                            <div onBlur={() => {setShowDetails(false);console.log('asda')}} style={showDetails ? { display: 'block' } : { display: 'none' }} className={styles.secretSection}>
+                            <div  style={showDetails ? { display: 'block' } : { display: 'none' }} className={styles.secretSection}>
                                 <ul>
                                     <li><Link href='/my-poems'>Poems</Link></li>
                                     <li><Link href='/write-poem'>Write Poems</Link></li>
@@ -43,7 +43,7 @@ export default function Layout({ children,auth }) {
                                 <ul>
                                     <li><Link href='/my-app'>Profile</Link></li>
                                     <li><Link href='/settings'>Settings</Link></li>
-                                    <li><Link type='button' onClick={()=>signOut({callbackUrl:'/'})}>Log out</Link></li>
+                                    <li><a type='button' onClick={()=>signOut({callbackUrl:'/'})}>Log out</a></li>
                                 </ul>
                             </div>
                         </div>

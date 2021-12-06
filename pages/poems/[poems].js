@@ -14,10 +14,10 @@ export default function Poems({ poem }) {
     const [liked, setLiked] = useState(false);
     const router = useRouter();
     const [bk, setBk] = useState(false);
-    const [likeCount, setLikedCount] = useState(poem.likes.length);
+    const [likeCount, setLikedCount] = useState(poem.likes?.length);
     useEffect(() => {
         console.log(session?.user.name,poem.likes)
-        const flwProof = poem.likes.some((like) => like.name === session?.user.name);
+        const flwProof = poem.likes?.some((like) => like.name === session?.user.name);
         const bookProof = poem.bookUser.some((bk) => bk.penName = session?.user.name);
         setLiked(flwProof);
         setBk(bookProof);

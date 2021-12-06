@@ -34,3 +34,91 @@ ul {
 section{
   height: 100vh;
 }
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+}
+
+.box{
+  width: 50px;
+  height: 50px;
+  color: white;
+}
+
+.ReactTags__remove{
+  background-color: white;
+  border: none !important;
+
+}
+.boxs{
+  display: flex;
+  gap:10px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.link{
+  text-decoration: underline;
+}
+.link:hover{
+  color: blue;
+}
+.Draftail-Toolbar {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Override default */
+.Draftail-Editor {
+  border: none !important;
+  width: 60% !important;
+  margin-top: 100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Override default */
+.public-DraftEditor-content {
+  font-family: Georgia, "Times New Roman", Times, serif !important;
+}
+
+/* Override default */
+.public-DraftEditorPlaceholder-inner {
+  font-family: Georgia, "Times New Roman", Times, serif !important;
+}
+
+.draftJsToolbar__blockType__27Jwn {
+  line-height: 20px !important;
+}
+
+.tags span{
+  text-align: center;
+  border:1px solid;
+  border-radius:20px;
+  width:75px;
+  padding: 10px;
+  height:40px;
+  font-size: 13px;
+  margin-left: 10px;
+
+}
+.tags span:hover{
+  background-color: orange;
+  color: white;
+  cursor: pointer;
+}

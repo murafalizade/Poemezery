@@ -14,22 +14,22 @@ export default class Coursels extends Component {
   slides = [
     {
       key: 'as',
-      content: <Image src="https://dogtrainingobedienceschool.com/pic/2286825_full-jaroslav-seifert-quotes-time-joyce-sutphen-cool-words-nature-quotes-nature-poem.jpg"  width='400px' alt="2" />
+      content: <Image src="/image1.jpg" height='350px'  width='200px' alt="2" />
     },
     {
       key: 'uuidv4()',
-      content: <Image src="https://static.poetryfoundation.org/jstor/i20604849/pages/27.png"  width='400px' alt="1" />
+      content: <Image src="/image2.png" width='200px' height='350px' alt="1" />
     },
     {
       key: 'asd',
-      content: <Image src="https://static.poetryfoundation.org/jstor/i20604990/pages/5.png" width='400px'  alt="3" />
+      content: <Image src="/image3.png" width='200px' height='350px'  alt="3" />
     },
     {
-      key:'asdsad',
-      content: <Image src="https://static.poetryfoundation.org/jstor/i20596657/pages/15.png" width='400px'  alt="4" />
-    },{
-      key:'asdad',
-      content: <Image src='https://dogtrainingobedienceschool.com/pic/7171158_full-cousin-quotes-from-tumblr-quotes-poem-danal-bjgmc-tb-org.jpg' width='400px' alt='5' />
+      key: 'asdsad',
+      content: <Image src="/image4.png" width='200px' height='350px' alt="4" />
+    }, {
+      key: 'asdad',
+      content: <Image src='/image5.jpg' width='200px'  height='350px' alt='5' />
     }
   ].map((slide, index) => {
     return { ...slide, onClick: () => this.setState({ goToSlide: index }) };
@@ -43,15 +43,15 @@ export default class Coursels extends Component {
 
   render() {
     return (
-      <div style={{ width: "300px", height: "500px", margin: "-55px auto" }}>
+      <div style={{ width: "400px", height: "450px", margin: "-55px auto" }}>
         <Carousel
-        withLoop={true}
+          withLoop={true}
           slides={this.slides}
           goToSlide={this.state.goToSlide}
           offsetRadius={this.state.offsetRadius}
           animationConfig={this.state.config}
         />
-       
+
       </div>
     );
   }

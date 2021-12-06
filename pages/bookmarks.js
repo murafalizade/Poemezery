@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getSession } from 'next-auth/client';
-import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import PoemCard from '../components/poemCard'
 import Link from 'next/dist/client/link';
@@ -26,7 +25,7 @@ export default function Bookmarks({ bookMarks, session }) {
 
 export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx);
-    const myProfile = await axios.get(`http://localhost:8080/api/v1/my-profile/`,{headers:{'Header-Token':session.accessToken}});
+    const myProfile = await axios.get(`http://localhost:8080/api/v1/my-profile/`,{headers:{'Header-Token':session?.accessToken}});
     console.log(myProfile)
     const bookMarks = myProfile.data.bookMarks;
     return {

@@ -62,16 +62,16 @@ export default function Welcome() {
 
                             <Row>
                                 <Col md={4}>
-                                    <Image src={'/service-icon1.svg'} width='76px' height='80px' />
+                                    <Image src={'/service-icon1.svg'} alt='service-icon-1' width='76px' height='80px' />
                                     <h5>Largest Collection of Poems</h5>
                                 </Col>
                                 <Col md={4}>
-                                    <Image src={'/service-icon2.svg'} width='76px' height='80px' />
+                                    <Image src={'/service-icon2.svg'}  alt='service-icon-2' width='76px' height='80px' />
 
                                     <h5>One Click Easy Subscription</h5>
                                 </Col>
                                 <Col md={4}>
-                                    <Image src={'/service-icon3.svg'} width='76px' height='80px' />
+                                    <Image src={'/service-icon3.svg'}  alt='service-icon-3' width='76px' height='80px' />
                                     <h5>Unlimited Poems, Anytime you want</h5>
                                 </Col>
                             </Row>
@@ -89,29 +89,29 @@ export default function Welcome() {
                         <p>Choose one of them and started reading poetry.</p>
                         <Col md={4}>
                             <div data-color='red' className={styles.catBox}>
-                                <Link href='/'>
+                                <Link passHref={true} href='/'>
                                     <p className={styles.catBoxTitle} >Blank verse</p></Link></div>
                         </Col>
                         <Col md={4}>
                             <div className={styles.catBox}>
-                                <Link href='/'>
+                                <Link passHref={true} href='/'>
                                     <p className={styles.catBoxTitle} >Rhymed poetry</p></Link>
                             </div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/'>
+                            <div className={styles.catBox}> <Link passHref={true} href='/'>
                                 <p className={styles.catBoxTitle} >Free verse</p></Link></div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/'>
+                            <div className={styles.catBox}> <Link passHref={true} href='/'>
                                 <p className={styles.catBoxTitle} >Epics </p></Link></div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/'>
+                            <div className={styles.catBox}> <Link passHref={true} href='/'>
                                 <p className={styles.catBoxTitle} >Narrative poetry</p></Link></div>
                         </Col>
                         <Col md={4}>
-                            <div className={styles.catBox}> <Link href='/'>
+                            <div className={styles.catBox}> <Link passHref={true} href='/'>
                                 <p className={styles.catBoxTitle} >Haiku</p></Link></div>
                         </Col>
                     </Row>
@@ -126,7 +126,7 @@ export default function Welcome() {
                         <Col md={6}>
                             <div className={styles.wrapper}>
                                 <Image src="/poemExample.png"
-                                    style={{ border: '1px solid black' }} width='330px' height='430px' alt="1" />
+                                    style={{ border: '1px solid black' }} width='330px' height='430px' alt="poem-example" />
                             </div>
                         </Col>
                         <Col md={6}>
@@ -152,13 +152,13 @@ export default function Welcome() {
 
                     <div>
                         <div className={styles.firstImg}>
-                            <Image src='/left-people.png' width='400px' height='360px' />
+                            <Image src='/left-people.png' alt='people-circle-left' width='400px' height='360px' />
                         </div>
                         <div className={styles.secondImg}>
-                            <Image src='/right-people.png' width='400px' height='360px' />
+                            <Image src='/right-people.png' alt='people-circle-right' width='400px' height='360px' />
                         </div>
                         <div className={styles.thirdImg}>
-                            <Image src='/net-shape-1.svg' width='1145px' height='200px' />
+                            <Image src='/net-shape-1.svg' alt='shape-pattern' width='1145px' height='200px' />
                         </div>
                     </div>
                     <Container>

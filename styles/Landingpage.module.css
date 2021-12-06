@@ -48,10 +48,10 @@
 }
 .secondSec{
     background: linear-gradient(
-180deg, #f4fcff 0%, #e8f5fa 100%);
-padding-bottom: 120px;
-border-radius: 0 0 293px;
-text-align: center;
+        180deg, #f4fcff 0%, #e8f5fa 100%);
+    padding-bottom: 120px;
+    border-radius: 0 0 293px;
+    text-align: center;
 }
 
 .secondContent{
