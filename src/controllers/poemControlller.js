@@ -11,6 +11,7 @@ module.exports.allPoems = async (req, res) => {
             poet: poem.poet,
             title: poem.title,
             views: poem.views,
+            tags:poem.tags,
             bookUser: poem.bookUser,
             likes: poem.likes,
             category: poem.category,
