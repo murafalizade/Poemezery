@@ -17,7 +17,7 @@ export default function SignIn() {
           <Link href='#'>
              <a className={styles.linkButton} >Continue Google</a>
           </Link>
-          <Link href='#'>
+          <Link href='/sign-in-email'>
              <a className={styles.linkButton} >Continue Email</a>
           </Link>
         </fieldset>

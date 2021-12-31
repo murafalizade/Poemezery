@@ -7,7 +7,7 @@ export default function SignUpEmail() {
     const handleLogin = (e) => {
         e.preventDefault();
         if (user.comfirPassword === user.password) {
-            signIn('credentials',
+            signIn('register',
                 {
                     email: user.email,
                     password: user.password,

@@ -14,7 +14,7 @@ export default function Poems({ poem }) {
     const [liked, setLiked] = useState(false);
     const router = useRouter();
     const [bk, setBk] = useState(false);
-    const [likeCount, setLikedCount] = useState(poem.likes?.length);
+    const [likeCount, setLikedCount] = useState(poem?.likes?.length);
     useEffect(() => {
         console.log(session?.user.name,poem.likes)
         const flwProof = poem.likes?.some((like) => like.name === session?.user.name);
@@ -63,7 +63,7 @@ export default function Poems({ poem }) {
         }
     }
     return (
-        <div style={{ textAlign: poem.align, backgroundImage: `url(${poem.backgroundImg ? poem.backgroundImg : '#'})`, padding: '20px' }}>
+        <div style={{ textAlign: poem?.align, backgroundImage: `url(${poem.backgroundImg ? poem.backgroundImg : '#'})`, padding: '20px' }}>
             <Head>
                 <title>&quot;{poem.title}&quot; - Social Network for poem</title>
             </Head>

@@ -4,9 +4,33 @@ import axios from 'axios'
 
 const providers = [
   Providers.Credentials({
-    name: 'Credentials',
+    id:'register',
+    name: 'register',
     authorize: async (credentials) => {
       const user = await axios.post('http://localhost:8080/api/v1/auth/register',
+        {
+            password: credentials.password,
+            email: credentials.email
+        },
+        {
+          headers: {
+            accept: '*/*',
+            'Content-Type': 'application/json'
+          }
+        })
+      if (user && user.status=='200') {
+        return user
+      } else {
+        return null
+      }
+    }
+   })
+  , 
+  Providers.Credentials({
+    id:'login',
+    name: 'Login',
+    authorize: async (credentials) => {
+      const user = await axios.post('http://localhost:8080/api/v1/auth/login',
         {
             password: credentials.password,
             email: credentials.email

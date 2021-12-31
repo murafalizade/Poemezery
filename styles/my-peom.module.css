@@ -1,0 +1,8 @@
+.head{
+    display:flex;
+    justify-content: space-between;
+}
+.tab{
+    height: 75px;
+    display: inline;
+}
