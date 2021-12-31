@@ -30,3 +30,17 @@ module.exports.register = async (req, res) => {
         }
     });
 }
+
+module.exports.login = async (req,res) =>{
+    const {email,password} = req.body;
+    const user = await userModel.findOne({email});
+    if(!user) return res.status(500).send(null,{msg:'Email or password incorrect'})
+    const match = await bcrypt.compareSync(password,user.password);
+    console.log(match,user)
+    jwt.sign({ userId: user._id }, process.env.LOCAL_REGISTER_SECRET, { expiresIn: `${7 * 24 * 60} min` }, (err, token) => {
+        if (err) {
+            res.sendStatus(500).send('some error occuped');
+        } else {
+            !match ? res.status(404).send({msg:'Email or passport incorrect'}) :res.status(200).send({token,user:{email,name:user.penName,image:user.imgUrl}});        }})
+
+}

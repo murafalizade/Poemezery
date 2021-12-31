@@ -2,12 +2,11 @@ const router = require('express').Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 require('../../configs/passport');
-require('../../configs/localPassport')
 require('../../configs/fbPassport');
 require('dotenv')
 
 
-const { setName, register } = require('../controllers/LoginControlller');
+const { setName, register, login } = require('../controllers/LoginControlller');
 const isAuth = require('../midlewares/isAuth');
 
 // google login
@@ -30,7 +29,7 @@ router.get('/auth/google/callback/', passport.authenticate('google', { session: 
 }
 );
 
-router.post('/auth/login', passport.authenticate('local', { session: false }));
+router.post('/auth/login', login );
 
 router.post('/auth/set/name',isAuth, setName);
 router.post('/auth/register', register);

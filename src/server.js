@@ -47,5 +47,5 @@ app.use('/api/v1', authRouter);
 app.use('/api/v1', poemRouter);
 app.use('/api/v1', userRouter);
 app.use('/api/v1',tagRouter);
-
+// app.get('/',(req,res)=>{res.send("asdada");console.log(req)})
 app.listen(PORT, () => console.log(`server is running http://localhost:${PORT}`));

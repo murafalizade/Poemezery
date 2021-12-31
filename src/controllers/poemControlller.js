@@ -44,6 +44,17 @@ module.exports.createPoem = async (req, res) => {
     return res.status(200).send(savePoem);
 }
 
+
+module.exports.delPoem = async (req,res) =>{
+    const poem = await poemModel.findOneAndDelete({id:req.body.id})
+    const user = await userModel.findOne({id:req.user.userId})
+    if(!poem) return res.status(404).send('Poem not founded')
+    if(!user) return res.status(404).send('User not founded')
+    authoruze = user.poems.includes(poem);
+    if(authoruze) return res.status(401).send('Access Denied')
+    return res.status(200).send('Success')
+}
+
 module.exports.editPoem = async (req, res) => {
     const editInformation = req.body;
     const author = await userModel.findOne({ id: req.user.userId });
