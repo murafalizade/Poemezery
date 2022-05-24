@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
 import { getSession } from 'next-auth/client';
 import axios from 'axios'
+import Link from 'next/dist/client/link';
 import { Container, Tabs, Tab } from 'react-bootstrap'
 import styles from '../styles/my-peom.module.css'
 import ReactHtmlParser from 'react-html-parser';
-export default function Mypoems({poems,session}) {
-    const delPoem = async (id) =>{
-         operation = await axios.delete(`http://localhost:8080/api/v1/my-poem/${id}`,{headers:{'Header-Token':session?.accessToken}})
-         console.log(operation.data)
+export default function Mypoems({ poems, drafts,session }) {
+    const delPoem = async (id) => {
+        const operation = await axios.delete(`http://localhost:8080/api/v1/my-poem/${id}`, { headers: { 'Header-Token': session?.accessToken } })
+        if (operation !== 'Success') {
+            alert('Something went wrong!')
+        }
+        else {
+            window.location.reload();
+        }
     }
     return (
         <Container>
@@ -17,31 +23,32 @@ export default function Mypoems({poems,session}) {
             </div>
             <Tabs defaultActiveKey="Public">
                 <Tab title='Publics' eventKey={'Public'}>
-                        <ul>
-                            {poems?.map(poem=>(
-                                <li>
+                    <ul>
+                        {poems===[]?poems.map(poem => (
+                            <li key={poem.id}>
                                 <div className='mt-5'>
                                     <h5>{poem.title}</h5>
                                     <p>{ReactHtmlParser(poem.poetHTML)}</p>
-                                    <button className='btn btn-outline-warning mx-3'>Edit</button>
-                                    <button onClick={()=>delPoem(poem.id)} className='btn btn-outline-warning mx-3'>Delete</button>
+                                    <Link href={`/write-poem?poemid=${poem.id}`}><a className='btn btn-outline-warning mx-3'>Edit</a></Link>
+                                    <button onClick={() => delPoem(poem.id)} className='btn btn-outline-warning mx-3'>Delete</button>
                                 </div>
                             </li>
-                            ))}
-                            
-                        </ul>
+                        )):<h3 className='mt-5 text-center'>Poems have not exist, let's write a new one</h3>}
+
+                    </ul>
                 </Tab>
                 <Tab title='Drafts' eventKey={'Drafts'}>
-                        <ul>
-                            <li>
-                                <div className='mt-5'>
-                                    <h5>Title peom</h5>
-                                    <p>Descriptiojiohign</p>
-                                    <button className='btn btn-outline-warning mx-3'>Edit</button>
-                                    <button className='btn btn-outline-warning mx-3'>Delete</button>
-                                </div>
-                            </li>
-                        </ul>
+                    <ul>
+                        {drafts === [] ? drafts.map((dft) => (<li key={dft.id}>
+                            <div className='mt-5'>
+                                <h5>{dft.title}</h5>
+                                <p>{ReactHtmlParser(dft.poetHTML)}</p>
+                                <Link href={`/write-poem?poemid=${dft.id}`}><a className='btn btn-outline-warning mx-3'>Edit</a></Link>
+                                <button onClick={() => delPoem(dft.id)} className='btn btn-outline-warning mx-3'>Delete</button>
+                            </div>
+                        </li>)) : <h3 className='mt-5 text-center'>Drafts have not exist</h3>}
+
+                    </ul>
 
                 </Tab>
             </Tabs>
@@ -50,12 +57,14 @@ export default function Mypoems({poems,session}) {
 }
 export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx);
-    const myProfile = await axios.get(`http://localhost:8080/api/v1/my-profile/`,{headers:{'Header-Token':session?.accessToken}});
+    const myProfile = await axios.get(`http://localhost:8080/api/v1/my-profile/`, { headers: { 'Header-Token': session?.accessToken } });
     console.log(myProfile)
     const poems = myProfile.data.poems;
+    const drafts = myProfile.data?.drafts;
     return {
         props: {
             poems,
+            drafts,
             session
         }
     }

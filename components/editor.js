@@ -15,8 +15,8 @@ const sideToolbarPlugin = createSideToolbarPlugin();
 const { SideToolbar } = sideToolbarPlugin;
 const plugins = [inlineToolbarPlugin, sideToolbarPlugin];
 import { stateToHTML } from "draft-js-export-html";
-export default function Editor() {
-
+export default function Editor({updateValue}) {
+    console.log(updateValue)
     const emptyContentState = convertFromRaw({
         entityMap: {},
         blocks: [
@@ -33,14 +33,13 @@ export default function Editor() {
         EditorState.createWithContent(emptyContentState)
     );
     const [plainTxtHTML,setPlainTxtHTML] = useState('');
-    const [plainTxt,setPlainTxt] = useState('');
+    const [plainTxt,setPlainTxt] = useState(!updateValue?"":updateValue);
 
     useEffect(() => {
         setEditorState(
-            EditorState.createWithContent(ContentState.createFromText(''))
+            EditorState.createWithContent(ContentState.createFromText(!updateValue?"":updateValue))
         );
         
-
     }, []);
     useEffect(() => {
         const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
@@ -49,6 +48,7 @@ export default function Editor() {
         setPlainTxt(value);
         setPlainTxtHTML(htmlOutput);
     }, [editorState])
+
     return (
         <div style={{marginBottom:'100px'}}>
             <DraftailEditor

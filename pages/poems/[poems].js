@@ -16,9 +16,9 @@ export default function Poems({ poem }) {
     const [bk, setBk] = useState(false);
     const [likeCount, setLikedCount] = useState(poem?.likes?.length);
     useEffect(() => {
-        console.log(session?.user.name,poem.likes)
-        const flwProof = poem.likes?.some((like) => like.name === session?.user.name);
-        const bookProof = poem.bookUser.some((bk) => bk.penName = session?.user.name);
+        console.log(session?.user.name,poem?.likes)
+        const flwProof = poem?.likes?.some((like) => like.name === session?.user.name);
+        const bookProof = poem?.bookUser?.some((bk) => bk.penName = session?.user.name);
         setLiked(flwProof);
         setBk(bookProof);
 
@@ -63,17 +63,17 @@ export default function Poems({ poem }) {
         }
     }
     return (
-        <div style={{ textAlign: poem?.align, backgroundImage: `url(${poem.backgroundImg ? poem.backgroundImg : '#'})`, padding: '20px' }}>
+        <div style={{ textAlign: poem?.align, backgroundImage: `url(${poem?.backgroundImg ? poem?.backgroundImg : '#'})`, padding: '20px' }}>
             <Head>
-                <title>&quot;{poem.title}&quot; - Social Network for poem</title>
+                <title>&quot;{poem?.title}&quot; - Social Network for poem</title>
             </Head>
-            <h3>{poem.title}</h3>
-            <span>{ReactHtmlParser(poem.poetHTML)}</span>
-            <small><i>Author: {poem.author}</i></small>
+            <h3>{poem?.title}</h3>
+            <span>{ReactHtmlParser(poem?.poetHTML)}</span>
+            <small><i>Author: {poem?.author}</i></small>
             <div className={styles.authorBox}>
                 <div>
                     <Image src='/default_avatar.png' width='50px' height='50px' alt='avatar_image' />
-                    <span className={styles.info}><a href={`/authors/${poem.ownId}`}>{poem.owner}</a><br />
+                    <span className={styles.info}><a href={`/authors/${poem?.ownId}`}>{poem?.owner}</a><br />
                         <small>12.02.2021</small></span>
                 </div>
 

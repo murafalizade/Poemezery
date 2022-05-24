@@ -1,4 +1,4 @@
-import React, { useState,useRef ,useEffect} from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import styles from '../styles/Navbar.module.css'
 import { IoBookmarkOutline } from 'react-icons/io5'
@@ -6,9 +6,40 @@ import { IoIosNotificationsOutline } from 'react-icons/io'
 import Head from 'next/head';
 import Link from 'next/dist/client/link'
 import { signOut } from "next-auth/client"
-export default function Layout({ children,auth }) {
+import NotifModal from './notifs'
+export default function Layout({ children, auth }) {
     const [showDetails, setShowDetails] = useState(false)
+    const [notifShow, setNotifShow] = useState(false)
+    const refs = useRef(null)
+    const notifRefs = useRef(null)
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (refs.current && !refs.current.contains(event.target)) {
+                setShowDetails(false)
+            }
+        }
 
+        // Bind the event listener
+        document.addEventListener("mouseup", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mouseup", handleClickOutside);
+        };
+    }, [refs]);
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (notifRefs.current && !notifRefs.current.contains(event.target)) {
+                setNotifShow(false)
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [notifRefs])
     return (
         <>
             <Head>
@@ -19,23 +50,23 @@ export default function Layout({ children,auth }) {
             <nav>
                 <div className={styles.navbar}>
                     <h3><Link href='/'>Poemezery</Link></h3>
-                    <form  role='search' action='/poems/poem?tag=Poem'>
+                    <form role='search' action='/poems/poem?tag=Poem'>
                         <input placeholder='Search ...' type='text' />
                     </form>
                     {!auth ? <div className={styles.form}>
                         <Link href='/sign-in'><a className={styles.btn}>Login</a></Link>
-                        <Link href='/sign-up'><a  className={styles.btn}>Get Started</a></Link>
+                        <Link href='/sign-up'><a className={styles.btn}>Get Started</a></Link>
                     </div> : <div className={styles.form}>
                         <div className='dropdown'>
-                            <div className={styles.icons}><IoIosNotificationsOutline size={'30px'} /></div>
-                            <div style={{ display: 'none' }} className={styles.secretSection}>
-                                <p> Not new notifications yet</p>
-                            </div>
+                            <div ref={notifRefs} onMouseUp={()=>setNotifShow(true)} className={styles.icons}><IoIosNotificationsOutline size={'30px'} /></div>
+                            {notifShow?<NotifModal notifs={session.notifications}/>:null}
                         </div>
                         <div className={styles.icons}><Link href='/bookmarks' ><IoBookmarkOutline size={'30px'} /></Link></div>
                         <div>
-                            <Image  onMouseUp={() => setShowDetails(!showDetails)} src='/default_avatar.png' width='40px' height='40px' alt='avatar_image' />
-                            <div  style={showDetails ? { display: 'block' } : { display: 'none' }} className={styles.secretSection}>
+                            <span ref={refs}>
+                                <Image onMouseUp={() => setShowDetails(!showDetails)} src='/default_avatar.png' width='40px' height='40px' alt='avatar_image' />
+                            </span>
+                            <div style={showDetails ? { display: 'block' } : { display: 'none' }} className={styles.secretSection}>
                                 <ul>
                                     <li><Link href='/my-poems'>Poems</Link></li>
                                     <li><Link href='/write-poem'>Write Poems</Link></li>
@@ -43,7 +74,7 @@ export default function Layout({ children,auth }) {
                                 <ul>
                                     <li><Link href='/my-app'>Profile</Link></li>
                                     <li><Link href='/settings'>Settings</Link></li>
-                                    <li><a type='button' onClick={()=>signOut({callbackUrl:'/'})}>Log out</a></li>
+                                    <li><a type='button' onClick={() => signOut({ callbackUrl: '/' })}>Log out</a></li>
                                 </ul>
                             </div>
                         </div>

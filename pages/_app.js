@@ -8,24 +8,24 @@ import { useRouter } from 'next/router'
 function MyApp({ Component, pageProps }) {
   const [auth, setAuth] = useState(false);
   useEffect(() => {
-    const authCheck = async () => {
-      const session = await getSession();
-      if (session !== null) {
-        setAuth(true);
+     const authCheck = async () => {
+       const session = await getSession();
+        if (session !== null) {
+          setAuth(true);
+        }
+        else {
+          setAuth(false)
+        } 
       }
-      else {
-        setAuth(false)
-      }
-    }
-    authCheck();
-  }, [])
+     authCheck();
+   }, [])
   const router = useRouter();
   const officailPage = ['/welcome', '/about', '/contact-us']
   return (
     <Provider session={pageProps.session}>
-      {!officailPage.includes(router.route) ? <Layout auth={auth}>
+       <Layout auth={auth}>
         <Component {...pageProps} />
-      </Layout> : <Component {...pageProps} />}
+      </Layout> 
     </Provider>
 
   )

@@ -74,7 +74,7 @@ const options = {
   providers,
   callbacks,
   pages: {
-    error: '/sign-up-email' // Changing the error redirect page to our custom login page
+    error: '/sign-up-emails' // Changing the error redirect page to our custom login page
   }
 }
 const auth = (req, res) => NextAuth(req, res, options)

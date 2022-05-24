@@ -5,18 +5,18 @@ import TagInput from './tagInput'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import axios from 'axios';
-import {useSession} from 'next-auth/client'
+import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/dist/client/router'
 import ReactHtmlParser from 'react-html-parser';
-export default function PrePublish({ profileInfo }) {
+export default function PrePublish({ profileInfo, value }) {
     console.log(profileInfo)
-    const [align, setAlign] = useState('center')
+    const [align, setAlign] = useState(!value ? 'center' : value)
     const [imageUrl, setImageUrl] = useState('')
-    const [preview, setPreview] = useState('')
+    const [preview, setPreview] = useState(!value ? '' : value)
     const [checkeds, setChekceds] = useState(false)
-    const [title, setTitle] = useState('')
-    const [language, setLanguage] = useState('')
-    const [category, setCategory] = useState('')
+    const [title, setTitle] = useState(!value ? '' : value.title)
+    const [language, setLanguage] = useState(!value ? '' : value.language)
+    const [category, setCategory] = useState(!value ? '' : value.category)
     const [session] = useSession();
     const router = useRouter();
     const [author, setAuthor] = useState(profileInfo.penName);
@@ -29,23 +29,38 @@ export default function PrePublish({ profileInfo }) {
             reader.readAsDataURL(imageUrl)
         }
     }, [imageUrl])
-    const  poet = useSelector(state=>state.poem);
-    const tags  = useSelector(state=>state.tags);
-    useEffect(()=>{console.log(tags)},[tags])
-    const sumbitHandeler = () => {
-        axios.post(`http://localhost:8080/api/v1/create-poem`, {
-            poet:poet.poet,
-            poetHTML:poet.poetHTML,
+    const poet = useSelector(state => state.poem);
+    const tags = useSelector(state => state.tags);
+    useEffect(() => { console.log(tags) }, [tags])
+    const updateHandeler = () => {
+        axios.put(`http://localhost:8080/api/v1/my-poem/edit/${value.id}`, {
+            poet: poet.poet,
+            poetHTML: poet.poetHTML,
             title,
-            imgUrl:preview,
+            imgUrl: preview,
             align,
             author,
             category: category,
             language: language,
             tags
         }, { headers: { 'Header-Token': session?.accessToken } }).
-        then(res=>{console.log(res.data);router.push('/my-poems')})
-        .catch(err=>{console.log(err);router.push('/write-poem')})
+            then(res => { console.log(res.data); router.push('/my-poems') })
+            .catch(err => { console.log(err); router.push('/write-poem') })
+    }
+    const sumbitHandeler = () => {
+        axios.post(`http://localhost:8080/api/v1/create-poem`, {
+            poet: poet.poet,
+            poetHTML: poet.poetHTML,
+            title,
+            imgUrl: preview,
+            align,
+            author,
+            category: category,
+            language: language,
+            tags
+        }, { headers: { 'Header-Token': session?.accessToken } }).
+            then(res => { console.log(res.data); router.push('/my-poems') })
+            .catch(err => { console.log(err); router.push('/write-poem') })
     }
 
 
@@ -57,7 +72,7 @@ export default function PrePublish({ profileInfo }) {
                     <Row>
                         <Col md={6}>
                             <div style={{ textAlign: align, backgroundImage: `url(${preview})`, backgroundSize: 'cover' }} className={styles.preview}>
-                                <p>{ReactHtmlParser(poet.poetHTML)}</p>
+                                <p>{value ? ReactHtmlParser(value.poetHTML) : ReactHtmlParser(poet.poetHTML)}</p>
                             </div>
                             <select onChange={(e) => setAlign(e.target.value)} value='center'>
                                 <option value='right'>Right</option>
@@ -81,8 +96,8 @@ export default function PrePublish({ profileInfo }) {
                                 <h4>Information Poem</h4>
                                 <fieldset style={{ marginLeft: '35px' }}>
 
-                                    <input value={title} onChange={(e)=>setTitle(e.target.value)}  placeholder='Title of Peom' />
-                                    <select value={language} onChange={(e)=>setLanguage(e.target.value)}>
+                                    <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title of Peom' />
+                                    <select value={language} onChange={(e) => setLanguage(e.target.value)}>
                                         <option value='azerbaijan'>Azerbaijan</option>
                                         <option value='Turkey'>Turkey</option>
                                         <option value='English'>English</option>
@@ -90,7 +105,7 @@ export default function PrePublish({ profileInfo }) {
                                         <option value='Russian'>Russian</option>
                                     </select>
                                     <TagInput />
-                                    <select value={category} onChange={(e)=>setCategory(e.target.value)} >
+                                    <select value={category} onChange={(e) => setCategory(e.target.value)} >
                                         <option value=''>Choose category</option>
                                         <option value='love'>love</option>
                                         <option value='happy'>happy</option>
@@ -109,7 +124,7 @@ export default function PrePublish({ profileInfo }) {
                     </Row>
                     <div className={styles.endOfModal}>
                         <Link href='/write-poem'>Cancel</Link>
-                        <button onClick={()=>sumbitHandeler()} className='btn btn-outline-success rounded '>Publish</button>
+                        {value ? <button onClick={() => updateHandeler()} className='btn btn-outline-success rounded '>Update</button> : <button onClick={() => sumbitHandeler()} className='btn btn-outline-success rounded '>Publish</button>}
                     </div>
                 </div>
             </div>

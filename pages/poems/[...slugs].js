@@ -11,7 +11,6 @@ function Poem({ somePoem }) {
                     <>
                         <p>We find only <b>{somePoem.length} poems</b></p>
                         <Row>
-
                             {somePoem.map(poem => (
                                 <Col md={4} key={poem.id}>
                                     <PoemCard poem={poem} />

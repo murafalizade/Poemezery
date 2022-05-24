@@ -11,7 +11,7 @@ export default function PoemCard({ poem }) {
     const [session] = useSession();
     const [auth, setAuth] = useState(false);
     useEffect(() => {
-        const bookProof = poem.bookUser.some((bk)=>bk.penName =session?.user.name);
+        const bookProof = poem.bookUser.some((bk)=>bk.penName == session?.user.name);
         setAuth(bookProof);        
     }, [session])
     const addBookmark = async () => {
@@ -22,12 +22,14 @@ export default function PoemCard({ poem }) {
             console.log(datas)
             return router.push('/');
         }
-        if(datas.data==='ADD'){   
+        if(datas.data == 'ADD'){   
             setAuth(true);
         }
         else{
             setAuth(false);
-        }    }
+        }    
+    }
+    console.log(auth);
     return (
         <div className={styles.card}>
             <div className={styles.cardBody}>
@@ -43,8 +45,8 @@ export default function PoemCard({ poem }) {
                 <div>
                     {
 
-                        auth ? <button onClick={() => addBookmark()} className='like'><IoBookmark /></button>
-                            : <button onClick={() => addBookmark()} className='like'><IoBookmarkOutline /></button>
+                        auth ? (<button onClick={() => addBookmark()}  className='like'><IoBookmark /></button>)
+                            :(<button onClick={() => addBookmark()} className='like'><IoBookmarkOutline /></button>)
                     }
                     <span>{poem.views} views</span>
                 </div>
