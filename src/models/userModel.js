@@ -11,6 +11,7 @@ const userModel = mongoose.model('user', new mongoose.Schema({
     email: String,
     penName: String,
     liked:[],
+    drafts:[],
     password: {type:String,default:''},
     bookMarks: [],
     imgUrl: {type:String,default:'http://localhost:8080/images/default_avatar.png'},

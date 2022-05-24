@@ -7,7 +7,7 @@ const { allAuthors,
      poemLike, 
      PoemAddBookmark,
  } = require('../controllers/userControlller');
-const isAuth = require('../midlewares/isAuth')
+const isAuth = require('../midlewares/isAuth');
 Router.get('/authors', allAuthors);
 Router.put('/my-profile/edit/:id',isAuth, editAuthor);
 Router.get('/authors/:id', oneAuthor);

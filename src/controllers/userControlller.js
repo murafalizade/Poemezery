@@ -42,6 +42,9 @@ module.exports.authorFollow = async (req, res) => {
     if(!operation){
         my.following.push({ id: author.id, name: author.penName });
         author.followers.push({ id: my.id, name: my.penName });
+        const notif = new notifModel({title:'Followed',body:`${my.penName} started follower you`});
+        await notif.save();
+        author.notifications.push(notif);
     }
     else{
         const newFollowing = my.following.filter(flw => flw.id !== author.id);
@@ -83,7 +86,7 @@ module.exports.PoemAddBookmark = async (req, res) => {
     if (!poem) return res.status(404).send('doens find');
     const profile = await userModel.findOne({ _id: req.user.userId });
     if (!profile) return res.status(404).send('Author doesnt find');
-    const operation = profile.bookMarks.some((bk)=>bk===poem);
+    const operation = profile.bookMarks.some((bk)=> bk==poem);
     let process;
     if(!operation){
         profile.bookMarks.push(poem);
@@ -99,5 +102,6 @@ module.exports.PoemAddBookmark = async (req, res) => {
     }
     await profile.save();
     await poem.save();
+    console.log(process);
     res.status(200).send(process);
 }

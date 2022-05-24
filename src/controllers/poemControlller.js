@@ -7,11 +7,11 @@ module.exports.allPoems = async (req, res) => {
         return {
             id: poem.id,
             ownId: poem.ownId,
-            owner:poem.owner,
+            owner: poem.owner,
             poet: poem.poet,
             title: poem.title,
             views: poem.views,
-            tags:poem.tags,
+            tags: poem.tags,
             bookUser: poem.bookUser,
             likes: poem.likes,
             category: poem.category,
@@ -37,37 +37,48 @@ module.exports.createPoem = async (req, res) => {
             await currentTag.save();
         }
     })
-    const newPoem = new poemModel({...req.body, ...{ ownId: profile.id, owner: profile.penName } });
+    const newPoem = new poemModel({ ...req.body, ...{ ownId: profile.id, owner: profile.penName } });
     profile.poems.push(newPoem);
     savePoem = await newPoem.save();
     await profile.save();
     return res.status(200).send(savePoem);
 }
 
+module.exports.getOwnPoem = async (req, res) => {
+    const poem = await poemModel.findOne({ id: req.params.id })
+    const user = await userModel.findOne({ _id: req.user.userId })
+    if (!poem) return res.status(404).send('Poem not founded')
+    if (!user) return res.status(404).send('User not founded')
+    // authoruze = user.poems.includes(poem);
+    // if (!authoruze) return res.status(401).send('Access Denied')
+    return res.status(200).send(poem)
+}
 
-module.exports.delPoem = async (req,res) =>{
-    const poem = await poemModel.findOneAndDelete({id:req.body.id})
-    const user = await userModel.findOne({id:req.user.userId})
-    if(!poem) return res.status(404).send('Poem not founded')
-    if(!user) return res.status(404).send('User not founded')
-    authoruze = user.poems.includes(poem);
-    if(authoruze) return res.status(401).send('Access Denied')
+module.exports.delPoem = async (req, res) => {
+    await poemModel.findOneAndDelete({ id: req.params.id })
+    const user =  await userModel.findById(req.user.userId)
+    newPoemList = user.poems.filter(pm=>pm.id!==req.params.id)
+    user.poems = newPoemList;
+    await user.save()
+    //authoruze = user.poems.includes(poem);
+    // if (authoruze) return res.status(401).send('Access Denied')
     return res.status(200).send('Success')
 }
 
 module.exports.editPoem = async (req, res) => {
     const editInformation = req.body;
-    const author = await userModel.findOne({ id: req.user.userId });
+    const poem = await poemModel.findOneAndUpdate({id:req.params.id},{$set:editInformation})
+    const author = await userModel.findById(req.user.userId);
+    console.log(poem,author)
     if (!author) return res.status(400).send('Abonded');
-    const updatePoem = author.poems.map(poem => {
-        if (poem.id === req.params.id) {
-            poem = { ...poem, ...editInformation }
+    const updatePoem = author.poems.map((pm) => {
+        if (pm.id === req.params.id) {
+            pm = { ...pm, ...editInformation }
         }
-        return poem
+        return pm
     });
     author.poems = updatePoem;
     await author.save();
-    const poem = await poemModel.updateOne({ id: req.params.id }, { $set: editInformation })
     await poem.save();
     return res.status(200).send('success')
 

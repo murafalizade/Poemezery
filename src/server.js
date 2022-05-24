@@ -11,6 +11,7 @@ const authRouter = require('./routers/loginRouter')
 const poemRouter = require('./routers/poemRouter')
 const userRouter = require('./routers/userRouter')
 const tagRouter = require('./routers/searchRouter')
+const draftRouter = require('./routers/drafRouter')
 // Configs and Constants
 const passport = require('passport');
 require('dotenv').config();
@@ -29,7 +30,7 @@ try {
 // Middlewares
 app.use(morgan('dev'));
 app.use(cors());
-// app.use(helmet());
+app.use(helmet());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -38,7 +39,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, access-control-allow-origin");
     next();
-    });
+});
     
     
 
@@ -47,5 +48,6 @@ app.use('/api/v1', authRouter);
 app.use('/api/v1', poemRouter);
 app.use('/api/v1', userRouter);
 app.use('/api/v1',tagRouter);
+app.use('/api/v1',draftRouter)
 // app.get('/',(req,res)=>{res.send("asdada");console.log(req)})
 app.listen(PORT, () => console.log(`server is running http://localhost:${PORT}`));
